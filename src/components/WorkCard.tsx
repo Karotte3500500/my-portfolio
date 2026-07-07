@@ -1,4 +1,5 @@
 import type {Work} from "../data/works";
+import "./Works.css";
 
 type WorkCardProps = {
     work: Work;

@@ -1,5 +1,6 @@
 import { works } from "../data/works";
 import WorkCard from "./WorkCard";
+import "./Works.css";
 
 export default function Works(): React.JSX.Element{
     return(
