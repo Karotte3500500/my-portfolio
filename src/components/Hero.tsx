@@ -1,3 +1,5 @@
+import "./Hero.css";
+
 export default function Hero(): React.JSX.Element{
     return(
         <section className="hero section" id="top">
@@ -6,7 +8,8 @@ export default function Hero(): React.JSX.Element{
 
                 <h1>
                     技術で<br/>
-                    <span className="gradient-text">社会問題と創作</span>を<br/>
+                    <span className="gradient-text">社会問題</span>と<span className="gradient-text"><br/>
+                    創作</span>を<br/>
                     つなぐ。
                 </h1>
 
@@ -18,6 +21,29 @@ export default function Hero(): React.JSX.Element{
                     <a className="button primary" href="#works">作品を見る</a>
                     <a className="button ghost" href="#contact">連絡する</a>
                 </div>
+
+                <aside className="hero-card">
+                    <div className="portfolio-avatar">🥕</div>
+                    <h2>縄田 嵐</h2>
+                    <p>Developer / Creator</p>
+
+                    <dl className="main-stats">
+                        <div>
+                            <dt>Focus</dt>
+                            <dd>Web Development, Game Development</dd>
+                        </div>
+
+                        <div>
+                            <dt>Main</dt>
+                            <dd>C#, TypeScript</dd>
+                        </div>
+
+                        <div>
+                            <dt>Style</dt>
+                            <dd>Focus on the 'what' ？？？？.</dd>
+                        </div>
+                    </dl>
+                </aside>
             </div>
         </section>
     );

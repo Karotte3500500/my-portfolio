@@ -1,0 +1,83 @@
+.hero{
+    display: grid;
+    grid-template-columns: 1.3fr 360px;
+    gap: 48px;
+    align-items: center;
+
+    min-height: calc(100ch - 80px);
+}
+
+.hero h1 {
+  margin: 0;
+  font-size: clamp(3.2rem, 8vw, 6.8rem);
+  line-height: 1;
+  letter-spacing: -0.00em;
+}
+
+.gradient-text {
+  color: #ff8a3d;
+}
+
+.hero-lead {
+  max-width: 720px;
+  margin-top: 28px;
+  color: #745d4a;
+  font-size: 1.1rem;
+}
+
+.hero-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 32px;
+}
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  min-height: 48px;
+  padding: 0 20px;
+  border-radius: 999px;
+
+  font-weight: 800;
+}
+
+.button.primary {
+  background: #ff8a3d;
+  color: white;
+}
+
+.button.ghost {
+  border: 1px solid #ead7c4;
+  background: white;
+}
+
+@media (max-width: 800px) {
+  .site-header {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .nav-menu {
+    flex-wrap: wrap;
+  }
+
+  .hero {
+    grid-template-columns: 1fr;
+    min-height: auto;
+  }
+
+  .hero-actions {
+    flex-direction: column;
+  }
+
+  .button {
+    width: 100%;
+  }
+
+  .hero-card {
+    max-width: 420px;
+  }
+}
