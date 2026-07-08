@@ -11,10 +11,10 @@
 	margin-top: 32px;
 	padding: 24px;
 
-	border: 1px solid #ead7c4;
+	border: 1px solid var(--line);
 	border-radius: 24px;
-	background: white;
-	box-shadow: 0px 16px 48px rgba(103, 55, 25, 0.08);
+	background: var(--card);
+	box-shadow: 0px 16px 48px var(--shadow);
 }
 
 
@@ -36,7 +36,7 @@
 	grid-column: 1 / -1;
 	font-size: 0.8rem;
 	min-height: 1.5em;
-	color: #ff8e3d;
+	color: var(--accent);
 	font-weight: 800;
 }
 

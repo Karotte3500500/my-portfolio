@@ -1,6 +1,11 @@
 import "./Header.css";
 
-export default function Header(): React.JSX.Element{
+type HeaderProps = {
+    isLightMode: boolean;
+    setIsLightMode: (value: boolean) => void;
+};
+
+export default function Header({ isLightMode, setIsLightMode }: HeaderProps): React.JSX.Element{
     return(
         <header className="site-header">
             <a className="logo" href="#top">
@@ -17,6 +22,13 @@ export default function Header(): React.JSX.Element{
                     <li><a href="#contact">Contact</a></li>
                 </ul>
             </nav>
+
+            <button 
+                className="theme-toggle"
+                onClick={() => setIsLightMode(!isLightMode)}
+            >
+                {isLightMode ? "☽" : "☀"}
+            </button>
         </header>
     );
 }

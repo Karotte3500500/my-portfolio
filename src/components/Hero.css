@@ -16,11 +16,13 @@
 
 .gradient-text {
   color: #ff8a3d;
+  font-size: clamp(3.7rem, 8.5vw, 7.3rem);
   animation: blinkAndStop 2.2s step-end 1 forwards;
 }
 
 .gradient-text2 {
   color: #ff8a3d;
+  font-size: clamp(3.7rem, 8.5vw, 7.3rem);
   animation: blinkAndStop 2.7s step-end 1 forwards;
 }
 
@@ -35,7 +37,7 @@
 .hero-lead {
   max-width: 720px;
   margin-top: 28px;
-  color: #745d4a;
+  color: var(--lead);
   font-size: 1.1rem;
 }
 
@@ -43,28 +45,6 @@
   display: flex;
   gap: 12px;
   margin-top: 32px;
-}
-
-.button {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-
-  min-height: 48px;
-  padding: 0 20px;
-  border-radius: 999px;
-
-  font-weight: 800;
-}
-
-.button.primary {
-  background: #ff8a3d;
-  color: white;
-}
-
-.button.ghost {
-  border: 1px solid #ead7c4;
-  background: white;
 }
 
 @media (max-width: 800px) {
@@ -87,10 +67,6 @@
     flex-direction: column;
   }
 
-  .button {
-    width: 100%;
-  }
-
   .hero-card {
     max-width: 420px;
   }
@@ -99,41 +75,41 @@
 @keyframes blinkAndStop {
   0% {color: #ff8a3d;}
 
-  0.5% {color: #4b3a26; font-size: clamp(4.2rem, 9vw, 7.8rem);}
+  0.5% {color: var(--text); font-size: clamp(4.2rem, 9vw, 7.8rem);}
   1% {color: #57f413; font-size: clamp(3.2rem, 8vw, 6.8rem);}
   
-  1.5% {color: #4b3a26; font-size: clamp(3.2rem, 8vw, 6.8rem);}
+  1.5% {color: var(--text); font-size: clamp(3.2rem, 8vw, 6.8rem);}
   2% {color: #edaa1b; font-size: clamp(1.2rem, 5vw, 4.8rem);}
 
-  4% {color: #282422; font-size: clamp(3.2rem, 8vw, 6.8rem);}
+  4% {color: var(--text); font-size: clamp(3.2rem, 8vw, 6.8rem);}
   8% {color: #ff8a3d; font-size: clamp(3.2rem, 8vw, 6.8rem);}
 
-  12% {color: #4b3a26; font-size: clamp(6.2rem, 11vw, 10.8rem);}
+  12% {color: var(--text); font-size: clamp(6.2rem, 11vw, 10.8rem);}
   16% {color: #009c53; font-size: clamp(3.2rem, 8vw, 6.8rem);}
 
-  30% {color: #4b3a26; font-size: clamp(4.2rem, 9vw, 7.8rem);}
+  30% {color: var(--text); font-size: clamp(4.2rem, 9vw, 7.8rem);}
   40% {color: #ff8a3d; font-size: clamp(3.2rem, 8vw, 6.8rem);}
 
-  80% {color: #4b3a26; font-size: clamp(4.2rem, 9vw, 7.8rem);}
+  80% {color: var(--text); font-size: clamp(4.2rem, 9vw, 7.8rem);}
 }
 
 @keyframes blinkAndStop1 {
   0% {color: #745d4a;}
 
-  0.5% {color: #4b3a26; font-size: 20px;}
+  0.5% {color: var(--text); font-size: 20px;}
   1% {color: #f4c313; font-size: 10px;}
   
-  1.5% {color: #4b3a26; font-size: 60px;}
+  1.5% {color: var(--text); font-size: 60px;}
   2% {color: #edaa1b; font-size: 30px;}
 
-  4% {color: #282422; font-size: 20px;}
+  4% {color: var(--text); font-size: 20px;}
   8% {color: #23e340; font-size: 40px;}
 
-  12% {color: #4b3a26; font-size: 50px;}
+  12% {color: var(--text); font-size: 50px;}
   16% {color: #149da7; font-size: 20px;}
 
-  30% {color: #4b3a26; font-size: 50px;}
+  30% {color: var(--text); font-size: 50px;}
   40% {color: #ff8a3d; font-size: 50px;}
 
-  80% {color: #875a27; font-size: 10px;}
+  80% {color: var(--text); font-size: 10px;}
 }

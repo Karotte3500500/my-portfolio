@@ -1,4 +1,4 @@
-.site-header{
+.site-header {
     position: sticky;
     top: 0;
     z-index: 10;
@@ -6,12 +6,13 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    gap: 16px;
 
-    width: 100%;
+    width: min(1120px, calc(100% - 32px));
     margin: 0 auto;
-    padding: 16px 32px;
+    padding: 16px 0;
 
-    background: rgba(255, 248, 239, 0.8);
+    background: color-mix(in srgb, var(--bg) 82%, transparent);
     backdrop-filter: blur(16px);
 }
 
@@ -29,15 +30,20 @@
     height: 42px;
     border-radius: 14%;
 
-    background: #e8cfbe;
-    color: white;
+    background: var(--accent);
+    color: var(--bg);
 }
 
-.nav-menu{
-    display: flex;
-    gap: 8px;
+.nav-menu a {
+  display: inline-block;
+  padding: 8px 12px;
+  border-radius: 999px;
 
-    margin: 0;
-    padding: 0;
-    list-style: none;
+  color: var(--muted);
+  font-weight: 700;
+}
+
+.nav-menu a:hover {
+  background: var(--bg-soft);
+  color: var(--text);
 }

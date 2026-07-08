@@ -1,3 +1,35 @@
+.app {
+  --bg: #fff8ef;
+  --bg-soft: #fff0dd;
+  --text: #24170f;
+  --card: #ffffff;
+  --line: #ead7c4;
+  --lead: #745d4a;
+  --accent: #ff8a3d;
+  --btn-g: #f4e9d7;
+  --shadow: rgba(103, 55, 25, 0.14);
+
+  min-height: 100vh;
+  background: var(--bg);
+  color: var(--text);
+
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.app.dark {
+  --bg: #120f16;
+  --bg-soft: #211a28;
+  --text: #fff8ec;
+  --card: #211b28;
+  --lead: #fff8ec;
+  --line: rgba(255, 255, 255, 0.14);
+  --accent: #ff9d57;
+  --btn-g: #3f382d;
+  --shadow: rgba(0, 0, 0, 0.38);
+}
+
+
+
 * {
   box-sizing: border-box;
 }
@@ -5,13 +37,13 @@
 body {
   margin: 0;
   font-family: system-ui, sans-serif;
-  background: #fff8ef;
-  color: #24170f;
+  background: var(--bg);
+  color: var(--text);
   line-height: 1.8;
 }
 
 a {
-  color: #ff8a3d;
+  color: var(--accent);
   text-decoration: none;
 }
 
@@ -29,11 +61,35 @@ a {
 
 .eyebrow {
   margin: 0 0 12px;
-  color: #ff8a3d;
+  color: var(--accent);
   font-size: 0.8rem;
   font-weight: 900;
   letter-spacing: 0.14em;
   text-transform: uppercase;
+}
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  min-height: 48px;
+  padding: 0 20px;
+  border-radius: 999px;
+
+  font-weight: 800;
+}
+
+.button.primary {
+  border: 3px solid var(--bg-soft);
+  background: #ff8a3d;
+  color: var(--bg);
+}
+
+.button.ghost {
+  border: 3px solid var(--line);
+  background: var(--btn-g);
+  color: var(--text);
 }
 
 @media (max-width: 800px) {
@@ -44,5 +100,9 @@ a {
 
   .nav-menu {
     flex-wrap: wrap;
+  }
+
+  .button {
+    width: 100%;
   }
 }
