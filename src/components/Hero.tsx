@@ -6,7 +6,7 @@ export default function Hero(): React.JSX.Element{
             <div className="hero-content">
                 <p className="eyebrow">Developer / Designer / World-builder</p>
 
-                <h1>
+                <h1 className="gradient-text3">
                     技術で<br/>
                     <span className="gradient-text">社会問題</span>と<span className="gradient-text2"><br/>
                     創作</span>を<br/>
@@ -30,17 +30,17 @@ export default function Hero(): React.JSX.Element{
                     <dl className="main-stats">
                         <div>
                             <dt>Focus</dt>
-                            <dd>Web Development, Game Development</dd>
+                            <dd>Web Development / Game Development</dd>
                         </div>
 
                         <div>
-                            <dt>Main</dt>
-                            <dd>C#, TypeScript</dd>
+                            <dt>Main Languages</dt>
+                            <dd>C# / TypeScript</dd>
                         </div>
 
                         <div>
                             <dt>Style</dt>
-                            <dd>Focus on the 'what' ？？？？.</dd>
+                            <dd>"Focus on the "What", not just the "How"."</dd>
                         </div>
                     </dl>
                 </aside>

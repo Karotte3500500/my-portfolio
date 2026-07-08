@@ -10,6 +10,14 @@ export type Work = {
     link?: string;
 }
 
+export function getCategoryUsed(): ProductCategory[] {
+    const tags = new Set<ProductCategory>();
+    works.forEach(work => {
+        work.category.forEach(tag => tags.add(tag));
+    });
+    return Array.from(tags);
+}
+
 export const works: Work[] = [
     {
         title: "はたちゃ",

@@ -95,6 +95,39 @@
   text-underline-offset: 4px;
 }
 
+.filter-btns {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 32px 0 24px;
+}
+
+.filter-btn {
+  min-height: 40px;
+  padding: 0 14px;
+
+  border: 1px solid #ead7c4;
+  border-radius: 999px;
+
+  background: white;
+  color: #745d4a;
+
+  font-weight: 800;
+  cursor: pointer;
+
+  transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease;
+}
+
+.filter-btn:hover {
+  transform: translateY(-2px);
+}
+
+.filter-btn.active {
+  border-color: transparent;
+  background: #ff8a3d;
+  color: white;
+}
+
 @media (max-width: 960px) {
   .works-grid {
     grid-template-columns: repeat(2, 1fr);

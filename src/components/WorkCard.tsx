@@ -1,9 +1,10 @@
-import type {Work} from "../data/works";
+import type { Work } from "../data/works";
 import "./Works.css";
 
 type WorkCardProps = {
     work: Work;
 };
+
 
 export default function WorkCard({ work }: WorkCardProps): React.JSX.Element{
     return(
