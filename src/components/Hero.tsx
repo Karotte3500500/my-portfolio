@@ -19,8 +19,8 @@ export default function Hero(): React.JSX.Element{
     return(
         <section className="hero section" id="top">
             <div className="hero-bg" aria-hidden="true">
-                <span className="orb orb-1"></span>
-                <span className="orb orb-2"></span>
+                <span className="orb orb-1 reveal"></span>
+                <span className="orb orb-2 reveal"></span>
                 <span className="grid-bg"></span>
             </div>
 
