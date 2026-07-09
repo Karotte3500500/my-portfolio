@@ -17,7 +17,7 @@ export default function Hero(): React.JSX.Element{
     })
 
     return(
-        <section className="hero section" id="top">
+        <section className="hero section reveal" id="top">
             <div className="hero-content">
                 <p className="eyebrow">Developer / Creator</p>
 

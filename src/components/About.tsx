@@ -1,6 +1,6 @@
 export default function About(): React.JSX.Element{
     return(
-        <section id="about" className="section">
+        <section id="about" className="section reveal">
             <p className="eyebrow">About</p>
             <h2>設計から実装まで</h2>
 

@@ -14,7 +14,7 @@ export default function Works(): React.JSX.Element{
         works.filter((work) => work.category.includes(filterCategory));
         
     return(
-        <section id="works" className="section">
+        <section id="works" className="section reveal">
             <div className="section-heading">
                 <p className="eyebrow">Works</p>
                 <h2>制作実績</h2>

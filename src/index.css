@@ -101,6 +101,19 @@ a {
   color: var(--text);
 }
 
+.reveal {
+  opacity: 0;
+  transform: translateY(18px);
+  transition:
+    opacity 2.2s ease,
+    transform 2s ease;
+}
+
+.reveal.revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
 @media (max-width: 800px) {
   .site-header {
     flex-direction: column;

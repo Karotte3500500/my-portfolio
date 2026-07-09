@@ -21,7 +21,7 @@ export default function Contact(): React.JSX.Element{
     }
 
     return(
-        <section id="contact" className="section contact-section">
+        <section id="contact" className="section contact-section reveal">
             <div className="section-heading">
                 <p className="eyebrow">Contact</p>
                 <h2>一緒に楽しいものづくりを</h2>

@@ -7,10 +7,14 @@ import Vision from "./components/Vision";
 import Contact from "./components/Contact";
 import Footer from "./components/Footer";
 
+import { useScrollReveal } from "./hooks/useScrollReveal";
+
 import { useState, useEffect } from "react";
 import "./App.css"
 
 function App(): React.JSX.Element {
+  useScrollReveal();
+
   const [isLightMode, setIsLightMode] = useState<boolean>(
     () => localStorage.getItem("lightMode") === "true"
   );
