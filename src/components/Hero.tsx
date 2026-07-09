@@ -1,6 +1,21 @@
+import { useState, useEffect } from "react";
 import "./Hero.css";
 
 export default function Hero(): React.JSX.Element{
+    const [displayWidth, setDisplayWidth] = useState(window.innerWidth);
+    
+    function handleResize() {
+        setDisplayWidth(window.innerWidth);
+    }
+
+    useEffect(() => {
+        window.addEventListener("resize", handleResize);
+
+        return () => {
+            window.removeEventListener("resize", handleResize);
+        }
+    })
+
     return(
         <section className="hero section" id="top">
             <div className="hero-content">
@@ -14,7 +29,8 @@ export default function Hero(): React.JSX.Element{
                 </h1>
 
                 <p className="hero-lead blink-1">
-                    縄田嵐  C#・Web・Unityを軸に、地域課題解決・創作・創作支援などのものづくりをしています。
+                    縄田嵐  C#・Web・Unityを軸に、地域課題解決・創作・創作支援などの{displayWidth > 1000 && <br/>}
+                    ものづくりをしています。
                 </p>
 
                 <div className="hero-actions">
