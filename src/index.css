@@ -28,18 +28,27 @@
   --shadow: rgba(0, 0, 0, 0.38);
 }
 
-
-
 * {
   box-sizing: border-box;
 }
 
-body {
+#root{
+  background: var(--bg);
+  min-height: 100vh; 
+}
+html { 
+  overscroll-behavior-y: none;
+  min-height: 100vh; 
+  background: var(--bg);
+} 
+
+body{
   margin: 0;
   font-family: system-ui, sans-serif;
   background: var(--bg);
   color: var(--text);
   line-height: 1.8;
+  min-height: 100vh; 
 }
 
 a {

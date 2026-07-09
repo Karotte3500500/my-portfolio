@@ -19,7 +19,7 @@ export default function Hero(): React.JSX.Element{
     return(
         <section className="hero section" id="top">
             <div className="hero-content">
-                <p className="eyebrow">Developer / Designer / World-builder</p>
+                <p className="eyebrow">Developer / Creator</p>
 
                 <h1 className="gradient-text3">
                     技術で<br/>
@@ -29,8 +29,9 @@ export default function Hero(): React.JSX.Element{
                 </h1>
 
                 <p className="hero-lead blink-1">
-                    縄田嵐  C#・Web・Unityを軸に、地域課題解決・創作・創作支援などの{displayWidth > 1000 && <br/>}
-                    ものづくりをしています。
+                    縄田嵐<br/>
+                    C#・Web・Unityを軸に、地域課題解決・創作・創作支援などの{displayWidth > 1000 && <br/>}
+                    ものづくりに挑戦しています。
                 </p>
 
                 <div className="hero-actions">
