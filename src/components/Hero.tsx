@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import "./Hero.css";
+import profileImg from "../assets/profile.jpg"
 
 export default function Hero(): React.JSX.Element{
     const [displayWidth, setDisplayWidth] = useState(window.innerWidth);
@@ -19,8 +20,8 @@ export default function Hero(): React.JSX.Element{
     return(
         <section className="hero section" id="top">
             <div className="hero-bg" aria-hidden="true">
-                <span className="orb orb-1"></span>
-                <span className="orb orb-2"></span>
+                {/* <span className="orb orb-1"></span>
+                <span className="orb orb-2"></span> */}
                 <span className="grid-bg"></span>
             </div>
 
@@ -44,30 +45,36 @@ export default function Hero(): React.JSX.Element{
                     <a className="button primary" href="#works">作品を見る</a>
                     <a className="button ghost" href="#contact">連絡する</a>
                 </div>
-
-                <aside className="hero-card">
-                    <div className="portfolio-avatar">🥕</div>
-                    <h2>縄田 嵐</h2>
-                    <p>Developer / Creator</p>
-
-                    <dl className="main-stats">
-                        <div>
-                            <dt>Focus</dt>
-                            <dd>Web Development / Game Development</dd>
-                        </div>
-
-                        <div>
-                            <dt>Main Languages</dt>
-                            <dd>C# / TypeScript</dd>
-                        </div>
-
-                        <div>
-                            <dt>Style</dt>
-                            <dd>"Focus on the "What", not just the "How"."</dd>
-                        </div>
-                    </dl>
-                </aside>
             </div>
+            <aside className={`hero-card reveal ${displayWidth > 1000 ? "main-hero-card" : ""}`} aria-label="プロフィール概要">
+                <div className="profile-avatar">
+                    <img src={profileImg} alt="プロフィール画像" />
+                    </div>
+                <h2>縄田 嵐 <span>Arashi Nawata</span></h2>
+                <p className="role">Developer / Creator</p>
+
+                <dl className="mini-stats">
+                    <div>
+                        <dt>Focus</dt>
+                        <dd>Web / Game / Creation</dd>
+                    </div>
+
+                    <div>
+                        <dt>Main Languages</dt>
+                        <dd>C# / TypeScript</dd>
+                    </div>
+                    
+                    <div>
+                        <dt>Style</dt>
+                        <dd>Focus on the "What", not just the "How"</dd>
+                    </div>
+
+                    <div>
+                        <dt>Hobby</dt>
+                        <dd>Traveling / Stargazing / Drawing</dd>
+                    </div>
+                </dl>
+            </aside>
         </section>
     );
 }

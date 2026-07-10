@@ -5,7 +5,8 @@
   --card: #ffffff;
   --line: #ead7c4;
   --lead: #745d4a;
-  --accent: #ff8a3d;
+  --accent: #ff7621;
+  --accent-2: #0efa7c;
   --btn-g: #f4e9d7;
   --shadow: rgba(103, 55, 25, 0.14);
 
@@ -21,9 +22,10 @@
   --bg-soft: #211a28;
   --text: #fff8ec;
   --card: #211b28;
-  --lead: #fff8ec;
+  --lead: #f8ebd6;
   --line: rgba(255, 255, 255, 0.14);
-  --accent: #ff9d57;
+  --accent: #ff8a3d;
+  --accent-2: #37d882;
   --btn-g: #3f382d;
   --shadow: rgba(0, 0, 0, 0.38);
 }
@@ -71,7 +73,7 @@ a {
 .eyebrow {
   margin: 0 0 12px;
   color: var(--accent);
-  font-size: 0.8rem;
+  font-size: 2rem;
   font-weight: 900;
   letter-spacing: 0.14em;
   text-transform: uppercase;
