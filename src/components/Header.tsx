@@ -15,8 +15,9 @@ const navItems: navItem[] = [
     { label: "About", href: "#about" },
     { label: "Works", href: "#works"},
     { label: "Skills", href: "#skills"},
-    { label: "Vision", href: "vision"},
-    { label: "Contact", href: "#contact"}
+    { label: "Vision", href: "#vision"},
+    { label: "Contact", href: "#contact"},
+    { label: "Blog", href: "vlog"}
 ]
 
 export default function Header({ isLightMode, setIsLightMode }: HeaderProps): React.JSX.Element{
@@ -30,7 +31,7 @@ export default function Header({ isLightMode, setIsLightMode }: HeaderProps): Re
         <header className="site-header">
             <a className="logo" href="#top">
                 <span className="logo-mark">🥕</span>
-                <span className="logo-text">Arashi Naeata</span>
+                <span className="logo-text">Arashi Nawata</span>
             </a>
 
             <nav>

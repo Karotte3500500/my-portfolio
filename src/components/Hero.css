@@ -79,17 +79,10 @@
   height: 200px;
   margin-bottom: 24px;
 
-  border-radius: 32px;
-
-  background:
-    linear-gradient(
-      135deg,
-      color-mix(in srgb, var(--accent) 32%, transparent),
-      var(--bg-soft)
-    );
+  border-radius: 20px;
 
   font-size: 3rem;
-  transform: rotate(-4deg);
+  transform: rotate(0deg);
 
   overflow: hidden;
 }
