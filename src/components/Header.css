@@ -57,7 +57,7 @@
   background: var(--card); */
 }
 
-.nav-menu a {
+.header-link {
   display: inline-block;
   align-items: center;
 
@@ -68,7 +68,7 @@
   font-weight: 700;
 }
 
-.nav-menu a:hover {
+.header-link:hover {
   background: var(--bg-soft);
   color: var(--text);
 }
@@ -222,7 +222,7 @@
     pointer-events: auto;
   }
 
-  .nav-menu a {
+  .header-link {
     display: flex;
     justify-content: center;
     align-items: center;

@@ -1,6 +1,6 @@
 .hero{
   position: relative;
-  overflow: hidden;
+  margin-top: -70px;
 
   display: grid;
   grid-template-columns: minmax(0, 1.25fr) clamp(280px, 30vw, 380px);
@@ -20,16 +20,17 @@
 .gradient-text {
   color: var(--accent);
   font-size: clamp(3.7rem, 8.5vw, 7.3rem);
+}
+
+.gradient-text-animation-1{
   animation: blinkAndStop 2.2s step-end 1 forwards;
 }
 
-.gradient-text2 {
-  color: var(--accent);
-  font-size: clamp(3.7rem, 8.5vw, 7.3rem);
+.gradient-text-animation-2{
   animation: blinkAndStop 2.7s step-end 1 forwards;
 }
 
-.gradient-text3 {
+.gradient-text-animation-3 {
   animation: blinkAndStop 1.6s step-end 1 forwards;
 }
 
@@ -58,7 +59,7 @@
 
 .hero-card{
   right: 0;
-  top: 170px;
+  top: 120px;
   z-index: 1;
 
   padding: 28px;

@@ -2,7 +2,11 @@ import { useState, useEffect } from "react";
 import "./Hero.css";
 import profileImg from "../assets/profile.jpg"
 
-export default function Hero(): React.JSX.Element{
+type HeroProps = {
+    skipAnimation?: boolean;
+}
+
+export default function Hero({ skipAnimation = false }: HeroProps): React.JSX.Element{
     const [displayWidth, setDisplayWidth] = useState(window.innerWidth);
     
     function handleResize() {
@@ -17,8 +21,10 @@ export default function Hero(): React.JSX.Element{
         }
     })
 
+    console.log(skipAnimation);
+
     return(
-        <section className="hero section" id="top">
+        <section className={`hero section ${skipAnimation ? "skip-animation" : ""}`} id="top">
             <div className="hero-bg" aria-hidden="true">
                 {/* <span className="orb orb-1"></span>
                 <span className="orb orb-2"></span> */}
@@ -28,14 +34,18 @@ export default function Hero(): React.JSX.Element{
             <div className="hero-content reveal">
                 <p className="eyebrow">Developer / Creator</p>
 
-                <h1 className="gradient-text3">
+                <h1 className={`${skipAnimation ? "" : "gradient-text-animation-3"}`}>
                     技術で<br/>
-                    <span className="gradient-text">社会課題</span>と<span className="gradient-text2"><br/>
+                    <span className={`gradient-text ${skipAnimation ? "" : "gradient-text-animation-1"}`}>
+                        社会課題
+                        </span>
+                    と
+                    <span className={`gradient-text ${skipAnimation ? "" : "gradient-text-animation-2"}`}><br/>
                     創作</span>に<br/>
                     取り組む。
                 </h1>
 
-                <p className="hero-lead blink-1">
+                <p className={`hero-lead ${skipAnimation ? "" : "blink-1"}`}>
                     C#・Web・Unityを軸に、地域課題解決・創作などの{displayWidth > 1000 && <br/>}
                     ものづくりに挑戦しています。
                 </p>

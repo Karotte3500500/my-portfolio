@@ -1,52 +1,31 @@
-import Header from "./components/Header";
-// import Hero from "./components/Hero";
-// import About from "./components/About";
-// import Works from "./components/Works";
-// import Skills from "./components/Skills";
-// import Vision from "./components/Vision";
-// import Contact from "./components/Contact";
-import Footer from "./components/Footer";
-
-import { useScrollReveal } from "./hooks/useScrollReveal";
-import Landing from "./views/LandingPage"
-
-import { useState, useEffect } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+
+import Layout from "./components/Layout";
+
+//ページのインポート
+import Landing from "./views/LandingView"
+import NotFound from "./views/NotFoundView";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Landing />
-  }
+    element: <Layout />,
+    children:[
+      {
+        path: "",
+        element: <Landing />
+      },
+      {
+        path: "*",
+        element: <NotFound />
+      }
+    ] 
+  },
 ]);
 
+
 function App(): React.JSX.Element {
-  useScrollReveal();
-
-  const [isLightMode, setIsLightMode] = useState<boolean>(
-    () => localStorage.getItem("lightMode") === "true"
-  );
-
-  useEffect(() => {
-    localStorage.setItem("theme", isLightMode ? "light" : "dark");
-  }, [isLightMode]);
-  return (
-    <div className={`app ${isLightMode ? "" : "dark"}`}>
-      <Header isLightMode={isLightMode} setIsLightMode={setIsLightMode} />
-
-      <main>
-        <RouterProvider router={router} />
-        {/* <Hero/>
-        <About/>
-        <Works/>
-        <Skills/>
-        <Vision/>
-        <Contact/> */}
-      </main>
-      
-      <Footer/>
-    </div>
-  )
+  return <RouterProvider router={router} />;
 }
 
 export default App

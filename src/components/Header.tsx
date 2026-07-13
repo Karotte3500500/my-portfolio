@@ -1,4 +1,7 @@
 import { useState } from "react";
+import { Link } from 'react-router-dom';
+
+
 import "./Header.css";
 
 type HeaderProps = {
@@ -17,7 +20,7 @@ const navItems: navItem[] = [
     { label: "Skills", href: "#skills"},
     { label: "Vision", href: "#vision"},
     { label: "Contact", href: "#contact"},
-    { label: "Blog", href: "vlog"}
+    { label: "Blog", href: "/vlog"}
 ]
 
 export default function Header({ isLightMode, setIsLightMode }: HeaderProps): React.JSX.Element{
@@ -26,21 +29,38 @@ export default function Header({ isLightMode, setIsLightMode }: HeaderProps): Re
     function closeMenu(): void{
         setIsMenuOpen(false);
     }
+    function renderNavItem(item: navItem): React.JSX.Element{
+
+        if(item.href.startsWith("/")){
+            return (
+                <Link className="header-link" to={item.href} onClick={closeMenu}>
+                    {item.label}
+                </Link>
+            );
+        }
+
+        else{
+
+            return (
+                 <Link className="header-link" to={{pathname: "/", hash: item.href}} onClick={closeMenu}>
+                    {item.label}
+                </Link>
+             );
+        }
+    }
 
     return(
         <header className="site-header">
-            <a className="logo" href="#top">
+            <Link className="logo" to={{pathname: "/", hash: "#top"}}>
                 <span className="logo-mark">🥕</span>
                 <span className="logo-text">Arashi Nawata</span>
-            </a>
+            </Link>
 
             <nav>
                 <ul className={isMenuOpen ? "nav-menu is-open" : "nav-menu"}>
                     {navItems.map((item) => (
                         <li key={item.label}>
-                            <a href={item.href} onClick={closeMenu}>
-                                {item.label}
-                            </a>
+                            {renderNavItem(item)}
                         </li>
                     ))}
                 </ul>
