@@ -4,7 +4,7 @@ export type Skill = {
 	title: string;
 	description: string;
 	level: number;
-	technology: Tech[];
+	technologys: Tech[];
 }
 
 export type LanguageSkill = {
@@ -18,25 +18,25 @@ export const skills: Skill[] = [
 		title: "Frontend (Web)",
 		description: "「はたちゃ」からWeb開発を初め、Vue.jsやReact.jsなどで開発を行っています。また、最近はCSSの学習に取り組んでいます。",
 		level: 60,
-		technology: [Tech.VueJs, Tech.ReactJs, Tech.Figma]
+		technologys: [Tech.VueJs, Tech.ReactJs, Tech.Figma]
 	},
 	{
 		title: "Backend",
 		description: "C#のASP.NETや、RubyのRailsでAPI開発の学習をしています。また、高専の授業を通じてPostgreSQLの学習も行っています。",
-		level: 50,
-		technology: [Tech.Dotnet, Tech.Rails, Tech.Firebase, Tech.Postgre]
+		level: 30,
+		technologys: [Tech.Dotnet, Tech.Rails, Tech.Firebase, Tech.Postgre]
 	},
 	{
 		title: "Game",
 		description: "Unityを用いてゲームの開発を行っています。最近では、同一シーンの共同開発やシェーダなどに挑戦しました。最近はゲーム開発をする暇がないことが悩みの種です。",
 		level: 70,
-		technology: [Tech.Unity, Tech.Blender, Tech.Shader]
+		technologys: [Tech.Unity, Tech.Blender, Tech.Shader]
 	},
 	{
 		title: "Design / Illustration",
 		description: "FigmaではUIデザイン、Affinityではベクタ画像の作成をしています。また、デジタルイラストも描いており、ドット絵やアニメーションにも挑戦しています。",
 		level: 50,
-		technology: [Tech.Figma, Tech.Affinity, Tech.MediBangPaint, Tech.Krita, Tech.GraphicsGale]
+		technologys: [Tech.Figma, Tech.Affinity, Tech.MediBangPaint, Tech.Krita, Tech.GraphicsGale]
 	}
 ];
 
@@ -49,12 +49,12 @@ export const languageSkills : LanguageSkill[] = [
 	{
 		language: Language.TypeScript,
 		description: "TypeScriptの経験は1年程度ですが、C#の次にメインで利用している言語です。主にWeb開発で利用しています。",
-		level: 80
+		level: 68
 	},
 	{
 		language: Language.JavaScript,
 		description: "JavaScriptは、元々Web開発をする際にメインで使用していましたが、型不安であるためTypeScriptへ移行しました。",
-		level: 80
+		level: 65
 	},
 	{
 		language: Language.Clang,
@@ -64,21 +64,21 @@ export const languageSkills : LanguageSkill[] = [
 	{
 		language: Language.Cpuls,
 		description: "C++は高専の授業で最も学習した言語であり、一部のアルゴリズムの学習や簡単なコンソールアプリの開発に利用しています。最近はライブラリの開発にも関心があります。",
-		level: 50
+		level: 55
 	},
 	{
 		language: Language.Java,
 		description: "高専の授業で学習した言語の1つです。C#と似ているため（正確にはC#がJavaに似ている）、比較的得意な言語の1つです。",
-		level: 50
+		level: 65
 	},
 	{
 		language: Language.Python,
 		description: "高専の授業で学習した言語の1つです。RaspberryPiやデータ処理のために学習しました。苦手ではありませんが、文法や言語思想はあまり馴染めません。",
-		level: 50
+		level: 45
 	},
 	{
 		language: Language.Ruby,
 		description: "Rubyはバックエンドの学習のためにRailsを習得中です。簡単なデータベース処理やAPI開発に挑戦しています。",
-		level: 50
+		level: 30
 	},
 ];
