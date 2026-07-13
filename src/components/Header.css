@@ -52,9 +52,9 @@
   padding: 6px;
   list-style: none;
 
-  border: 1px solid var(--line);
-  border-radius: 999px;
-  background: var(--card);
+  /* border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--card); */
 }
 
 .nav-menu a {
@@ -190,7 +190,7 @@
     height: 0;
   }
 
-  .nav-menu {
+.nav-menu {
     position: fixed;
     top: 74px;
     left: 16px;
@@ -207,10 +207,14 @@
     opacity: 0;
     pointer-events: none;
 
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    background: var(--card);
+
     transition:
       transform 0.2s ease,
       opacity 0.2s ease;
-  }
+}
 
   .nav-menu.is-open {
     transform: translateY(0);

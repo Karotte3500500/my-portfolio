@@ -30,14 +30,13 @@ export default function Hero(): React.JSX.Element{
 
                 <h1 className="gradient-text3">
                     技術で<br/>
-                    <span className="gradient-text">社会問題</span>と<span className="gradient-text2"><br/>
-                    創作</span>を<br/>
-                    つなぐ。
+                    <span className="gradient-text">社会課題</span>と<span className="gradient-text2"><br/>
+                    創作</span>に<br/>
+                    取り組む。
                 </h1>
 
                 <p className="hero-lead blink-1">
-                    縄田嵐<br/>
-                    C#・Web・Unityを軸に、地域課題解決・創作・創作支援などの{displayWidth > 1000 && <br/>}
+                    C#・Web・Unityを軸に、地域課題解決・創作などの{displayWidth > 1000 && <br/>}
                     ものづくりに挑戦しています。
                 </p>
 
