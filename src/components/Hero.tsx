@@ -42,7 +42,7 @@ export default function Hero({ skipAnimation = false }: HeroProps): React.JSX.El
                     と
                     <span className={`gradient-text ${skipAnimation ? "" : "gradient-text-animation-2"}`}><br/>
                     創作</span>に<br/>
-                    取り組む。
+                    挑戦する。
                 </h1>
 
                 <p className={`hero-lead ${skipAnimation ? "" : "blink-1"}`}>

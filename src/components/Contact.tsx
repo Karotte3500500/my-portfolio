@@ -46,6 +46,14 @@ export default function Contact(): React.JSX.Element{
                         >
                             GitHub
                         </a>
+                        <a
+                            className="button ghost"
+                            href="https://www.facebook.com/share/1KpZLLmgYA/"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            Facebook
+                        </a>
                     </div>
                      {copyMessage && <p className="copy-status">{copyMessage}</p>}
              </div>

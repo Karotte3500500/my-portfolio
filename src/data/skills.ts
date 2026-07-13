@@ -28,7 +28,7 @@ export const skills: Skill[] = [
 	},
 	{
 		title: "Game",
-		description: "Unityを用いてゲームの開発を行っています。最近では、同一シーンの共同開発やシェーダなどに挑戦しました。最近はゲーム開発をする暇がないことが悩みの種です。",
+		description: "Unityを用いてゲームの開発を行っています。直近では、同一シーンの共同開発やシェーダなどに挑戦しました。最近はゲーム開発をする暇がないことが悩みの種です。",
 		level: 70,
 		technologys: [Tech.Unity, Tech.Blender, Tech.Shader]
 	},
