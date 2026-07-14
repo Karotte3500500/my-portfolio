@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from 'react-router-dom';
-
+import { navItems, type navItem } from "../data/navItems";
 
 import "./Header.css";
 
@@ -9,19 +9,6 @@ type HeaderProps = {
     setIsLightMode: (value: boolean) => void;
 };
 
-type navItem = {
-    label: string;
-    href: string;
-}
-
-const navItems: navItem[] = [
-    { label: "About", href: "#about" },
-    { label: "Works", href: "#works"},
-    { label: "Skills", href: "#skills"},
-    { label: "Vision", href: "#vision"},
-    { label: "Contact", href: "#contact"},
-    { label: "Blog", href: "/vlog"}
-]
 
 export default function Header({ isLightMode, setIsLightMode }: HeaderProps): React.JSX.Element{
     const [ isMenuOpen, setIsMenuOpen] = useState<boolean>(false);

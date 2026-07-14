@@ -3,7 +3,9 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Layout from "./components/Layout";
 
 //ページのインポート
-import Landing from "./views/LandingView"
+import Landing from "./views/LandingView";
+import BlogList from "./views/BlogListView";
+import BlogDetail from "./views/BlogDetailView";
 import NotFound from "./views/NotFoundView";
 
 const router = createBrowserRouter([
@@ -14,6 +16,14 @@ const router = createBrowserRouter([
       {
         path: "",
         element: <Landing />
+      },
+      {
+        path: "blog",
+        element: <BlogList />
+      },
+      {
+        path: "blog/:slug",
+        element: <BlogDetail />
       },
       {
         path: "*",
