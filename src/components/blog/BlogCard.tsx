@@ -19,7 +19,7 @@ export default function BlogCard({post}: BlogCardProps): React.JSX.Element{
                 />
             </div>
             <div className="blog-card-info">
-                <p className="blog-date">{post.metadata.publishedAt}</p>
+                <p className="blog-date">⏲ {post.metadata.publishedAt}</p>
 
                 <h2>{post.metadata.title}</h2>
                 <hr />

@@ -26,8 +26,12 @@
   box-shadow: 0 24px 64px var(--shadow);
 }
 
+.blog-card h2 {
+  margin-top: -10px;
+}
+
 .blog-card hr{
-  margin-top: -24px;
+  margin-top: -10px;
   margin-bottom: 30px;
   border-color: var(--line); 
 }
@@ -52,11 +56,17 @@
 }
 
 .blog-date {
+  position: absolute;
+  right: 15px;
+  top: 25px;
+
   color: var(--lead);
   font-size: small;
-  text-align: right;
-  margin-top: 0;
-  margin-bottom: -50px;
+  text-align: center;
+  background-color: var(--bg-soft);
+
+  border-radius: 10px;
+  width: 100px;
 }
 
 .blog-description {
@@ -173,4 +183,10 @@
   border: 1px solid var(--line);
   border-radius: 18px;
   background: var(--bg-soft);
+}
+
+.blog-line {
+  border-color: var(--line);
+  margin: 5px;
+  margin-top: 40px
 }

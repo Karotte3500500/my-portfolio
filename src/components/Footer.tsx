@@ -32,8 +32,9 @@ export default function Footer(): React.JSX.Element {
           </Link>
 
           <p>
-            大島商船高専 情報工学科に在籍している。
+            大島商船高専 情報工学科に在学中で、
             ITの技術を活用して、課題解決や創作に取り組んでいます。
+            旅行や天体観測、イラストを描くことが趣味です。
           </p>
         </div>
 

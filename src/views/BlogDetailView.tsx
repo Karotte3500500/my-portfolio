@@ -15,7 +15,7 @@ export default function BlogDetailView(): React.JSX.Element {
                 <p className="eyebrow">Blog</p>
                 <h1>記事がみつかりませんでした</h1>
                 <Link className="text-link" to="/blog">
-                    ブログ一覧へ
+                    ←ブログ一覧へ
                 </Link>
             </section>
         );
@@ -25,7 +25,7 @@ export default function BlogDetailView(): React.JSX.Element {
 
     return (
         <section className="section blog-article">
-            <Link className="text-link" to="/blog">ブログ一覧へ</Link>
+            <Link className="text-link" to="/blog">←ブログ一覧へ</Link>
 
             <header className="blog-article-header reveal">
                 <p className="eyebrow">Blog</p>
@@ -39,8 +39,8 @@ export default function BlogDetailView(): React.JSX.Element {
                         <li key={tag}>{tag}</li>
                     ))}
                 </ul>
+                <hr className="blog-line"/>
             </header>
-
             <div className="blog-body reveal">
                 <Article />
             </div>
