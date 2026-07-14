@@ -1,6 +1,6 @@
 import { useLocation } from "react-router-dom";
 import Hero from "../components/Hero";
-import About from "../components/About";
+import History from "../components/History";
 import Works from "../components/Works";
 import Skills from "../components/Skills";
 import Contact from "../components/Contact";
@@ -13,7 +13,7 @@ function Landing(): React.JSX.Element {
   	return (
 		<section>
 			<Hero skipAnimation={shouldSkipHeroAnimation} />
-			<About/>
+			<History/>
 			<Works/>
 			<Skills/>
 			<Contact/>

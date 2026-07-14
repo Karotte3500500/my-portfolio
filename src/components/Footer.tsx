@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
-import "./Footer.css"
 import { navItems } from "../data/navItems";
+import "./Footer.css"
 
 const socialLinks = [
   {

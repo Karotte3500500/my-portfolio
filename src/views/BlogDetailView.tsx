@@ -41,7 +41,7 @@ export default function BlogDetailView(): React.JSX.Element {
                 </ul>
                 <hr className="blog-line"/>
             </header>
-            <div className="blog-body reveal">
+            <div className="blog-body">
                 <Article />
             </div>
         </section>
