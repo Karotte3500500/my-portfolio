@@ -71,7 +71,7 @@
 	height: 10px;
 	border-radius: 999px;
 
-	background: var(bg);
+	background: var(--bg);
 	overflow: hidden;
 
 	transform: translateY(10px);

@@ -27,7 +27,9 @@ export default function Footer(): React.JSX.Element {
               hash: "#top",
             }}
           >
-            <span className="logo-mark">🥕</span>
+            <span className="logo-mark">
+              <img src="/images/portfolio_logo_light.svg"/>
+            </span>
             <span className="logo-text">Arashi Nawata</span>
           </Link>
 
