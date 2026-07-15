@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import type { PointerEvent, WheelEvent } from "react";
+import type { PointerEvent } from "react";
 import { historyItems } from "../data/history";
 import "./History.css"
 
@@ -41,29 +41,6 @@ export default function History(): React.JSX.Element {
         observer.disconnect();
     };
     }, []);
-
-    const handleWheel = (event: WheelEvent<HTMLDivElement>) => {
-    const scroller = scrollerRef.current;
-    if (!scroller) return;
-
-    const maxScrollLeft = scroller.scrollWidth - scroller.clientWidth;
-    if (maxScrollLeft <= 0) return;
-
-    const delta =
-        Math.abs(event.deltaY) > Math.abs(event.deltaX)
-        ? event.deltaY
-        : event.deltaX;
-
-    const nextScrollLeft = Math.min(
-        maxScrollLeft,
-        Math.max(0, scroller.scrollLeft + delta)
-    );
-
-    if (nextScrollLeft !== scroller.scrollLeft) {
-        event.preventDefault();
-        scroller.scrollLeft = nextScrollLeft;
-    }
-    };
 
     const handlePointerDown = (event: PointerEvent<HTMLDivElement>) => {
     const scroller = scrollerRef.current;
@@ -132,7 +109,6 @@ export default function History(): React.JSX.Element {
         <div
             className={isDragging ? "history-scroll is-dragging" : "history-scroll"}
             ref={scrollerRef}
-            onWheel={handleWheel}
             onPointerDown={handlePointerDown}
             onPointerMove={handlePointerMove}
             onPointerUp={finishDragging}
