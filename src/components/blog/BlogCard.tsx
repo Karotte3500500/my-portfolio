@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import type { BlogPost } from "../../lib/blog"
+import type { BlogPost } from "../../types/blog"
 
 import "../../Blog.css"
 

@@ -1,18 +1,5 @@
 import type { ComponentType } from "react";
-
-export type BlogMetadata = {
-    slug: string;
-    title: string;
-    description: string;
-    publishedAt: string;
-    tags: string[];
-    coverImage?: string;
-};
-
-export type BlogPost = {
-    metadata: BlogMetadata;
-    Component: ComponentType;
-};
+import type { BlogMetadata, BlogPost } from "../types/blog";
 
 type BlogModule = {
     metadata: BlogMetadata;
@@ -29,10 +16,11 @@ export const blogPosts: BlogPost[] = Object.values(modules)
         metadata: module.metadata,
         Component: module.default,
     }))
+    .filter((post) => post.metadata.status === "public")
     .sort((a, b) =>
         b.metadata.publishedAt.localeCompare(a.metadata.publishedAt)
     );
 
-    export function getBlogPostBySlug(slug: string): BlogPost | undefined{
-        return blogPosts.find((post) => post.metadata.slug == slug);
-    }
+export function getBlogPostBySlug(slug: string): BlogPost | undefined{
+    return blogPosts.find((post) => post.metadata.slug === slug);
+}

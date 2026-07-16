@@ -104,7 +104,7 @@
 }
 
 .blog-coverImage {
-  width: 100%;
+  width: 108%;
   aspect-ratio: 100 / 60;
 
   border-radius: 10px;
@@ -112,6 +112,7 @@
 
   margin-top: 20px;
   margin-bottom: 20px;
+  margin-left: -4%;
 }
 
 .blog-coverImage img{
@@ -141,6 +142,13 @@
   margin-top: 42px;
   font-size: 1.05rem;
   line-height: 1.95;
+}
+
+.blog-body h1 {
+  margin-top: 30px;
+  margin-bottom: 40px;
+
+  border-bottom: 3px solid var(--line);
 }
 
 .blog-body h2 {
@@ -175,6 +183,14 @@
   border-radius: 18px;
   background: var(--card);
   border: 1px solid var(--line);
+}
+
+.blog-body img {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  display: block;
+  border-radius: 10px;
 }
 
 .callout {
