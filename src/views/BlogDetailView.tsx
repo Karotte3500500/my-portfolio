@@ -1,5 +1,6 @@
 import { Link, useParams } from "react-router-dom";
-import { getBlogPostBySlug } from "../lib/blog";
+import { blogPosts, getBlogPostBySlug } from "../lib/blog";
+import BlogIndexProvider from "../components/mdx/BlogIndexProvider";
 import type React from "react";
 
 import "../Blog.css";
@@ -42,7 +43,9 @@ export default function BlogDetailView(): React.JSX.Element {
                 <hr className="blog-line"/>
             </header>
             <div className="blog-body">
-                <Article />
+                <BlogIndexProvider posts={blogPosts}>
+                    <Article />
+                </BlogIndexProvider>
             </div>
         </section>
     );

@@ -106,51 +106,51 @@ export default function History(): React.JSX.Element {
         <p className="history-scroll-hint">Scroll sideways →</p>
         <div className="history-scroll-shell reveal">
 
-        <div
-            className={isDragging ? "history-scroll is-dragging" : "history-scroll"}
-            ref={scrollerRef}
-            onPointerDown={handlePointerDown}
-            onPointerMove={handlePointerMove}
-            onPointerUp={finishDragging}
-            onPointerCancel={finishDragging}
-            onClickCapture={handleClickCapture}
-            tabIndex={0}
-            aria-label="経歴タイムラインを横にスクロール"
-        >
-            <div className="history-track">
-            {historyItems.map((item) => (
-                <article className="history-scroll-item" key={item.title}>
-                    <div className="history-highlight-area">
-                        {item.highlights.map((highlight) => (
-                        highlight !== "" &&  <p className="history-highlight" key={highlight}>
-                            {highlight}
-                        </p>
-                        ))}
-                    </div>
+            <div
+                className={isDragging ? "history-scroll is-dragging" : "history-scroll"}
+                ref={scrollerRef}
+                onPointerDown={handlePointerDown}
+                onPointerMove={handlePointerMove}
+                onPointerUp={finishDragging}
+                onPointerCancel={finishDragging}
+                onClickCapture={handleClickCapture}
+                tabIndex={0}
+                aria-label="経歴タイムラインを横にスクロール"
+            >
+                <div className="history-track">
+                {historyItems.map((item) => (
+                    <article className="history-scroll-item" key={item.title}>
+                        <div className="history-highlight-area">
+                            {item.highlights.map((highlight) => (
+                            highlight !== "" &&  <p className="history-highlight" key={highlight}>
+                                {highlight}
+                            </p>
+                            ))}
+                        </div>
 
-                    <div className="history-node-area" aria-hidden="true">
-                        <span className={item.mainNode ? "history-node-main" : "history-node"}></span>
-                    </div>
+                        <div className="history-node-area" aria-hidden="true">
+                            <span className={item.mainNode ? "history-node-main" : "history-node"}></span>
+                        </div>
 
-                    {!item.none && <div className="history-card">
-                        <h3>{item.title}</h3>
+                        {!item.none && <div className="history-card">
+                            <h3>{item.title}</h3>
 
-                        <ul className="history-points">
-                        {item.points.map((point) => (
-                            <li key={point}>{point}</li>
-                        ))}
-                        </ul>
+                            <ul className="history-points">
+                            {item.points.map((point) => (
+                                <li key={point}>{point}</li>
+                            ))}
+                            </ul>
 
-                        <ul className="history-skills">
-                        {item.skills.map((skill) => (
-                            <li key={skill}>{skill}</li>
-                        ))}
-                        </ul>
-                    </div>}
-                </article>
-            ))}
+                            <ul className="history-skills">
+                            {item.skills.map((skill) => (
+                                <li key={skill}>{skill}</li>
+                            ))}
+                            </ul>
+                        </div>}
+                    </article>
+                ))}
+                </div>
             </div>
-        </div>
         </div>
     </section>
     );
