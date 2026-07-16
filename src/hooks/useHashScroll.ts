@@ -5,7 +5,21 @@ export function useHashScroll(): void{
 	const location = useLocation();
 
 	useEffect(() =>{
-		if (!location.hash) return;
+		let timeoutId: number | undefined;
+
+		if (!location.hash) {
+			const animationFrameId = requestAnimationFrame(() => {
+				window.scrollTo({
+					top: 0,
+					left: 0,
+					behavior: "auto",
+				});
+			})
+
+			return () => {
+				cancelAnimationFrame(animationFrameId);
+			}
+		}
 
 		const id = decodeURIComponent(location.hash.replace("#", ""));
 
@@ -26,12 +40,16 @@ export function useHashScroll(): void{
 			const didScroll = scrollToTarget();
 
 			if(!didScroll){
-				setTimeout(scrollToTarget, 100);
+				timeoutId = window.setTimeout(scrollToTarget, 100);
 			}
 		});
 
 		return () => {
 			cancelAnimationFrame(animationFrameId);
+
+			if(timeoutId !== undefined){
+				clearTimeout(timeoutId);
+			}
 		};
-	}, [location.pathname, location.hash]);
+	}, [location.pathname, location.search, location.hash]);
 }

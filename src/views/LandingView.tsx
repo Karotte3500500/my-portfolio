@@ -3,6 +3,7 @@ import Hero from "../components/Hero";
 import History from "../components/History";
 import Works from "../components/Works";
 import Skills from "../components/Skills";
+import BlogLp from "../components/BlogLp"
 import Contact from "../components/Contact";
 
 function Landing(): React.JSX.Element {
@@ -16,6 +17,7 @@ function Landing(): React.JSX.Element {
 			<History/>
 			<Works/>
 			<Skills/>
+			<BlogLp/>
 			<Contact/>
 	  	</section>
   	)
