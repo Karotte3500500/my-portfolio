@@ -19,13 +19,15 @@ export const historyItems: HistoryItem[] = [
     skills: [],
   },
   {
-    title: "r",
+    title: "幼少期",
     highlights: [
       "エジソンの伝記から、ものづくりに魅入られる",
     ],
-    points: [""],
+    points: [
+      "なぜ？どうして？科学のお話を読む",
+      "伝記からものづくりへ"
+    ],
     skills: [],
-    none: true,
   },
   {
     title: "小学校",
@@ -33,24 +35,47 @@ export const historyItems: HistoryItem[] = [
       "ロボットを作りや工作に熱中",
     ],
     points: [
-      "ロボット教室に通う",
+      "工作が好きだった",
       "Scratchに触れる",
-      "Arduinoで初プログラミング",
+      "ロボット教室へ通う",
     ],
-    skills: ["Scratch", "Arduino"],
+    skills: ["Scratch"],
     mainNode: true,
+  },
+    {
+    title: "ロボティクスプロフェッサーコースへ昇格",
+    highlights: [
+      "初めてArduinoに触れる",
+    ],
+    points: [
+      "ロボット教室のコースが最高ランクに",
+      "初めての文字でのプログラミング",
+    ],
+    skills: ["Arduino"],
   },
   {
     title: "中学校",
     highlights: [
-      "プログラミングが楽しい！",
+      "プログラミングや創作に熱中",
     ],
     points: [
-      "C#でHello World",
+      "創作文化への憧れを持つ",
       "イラストを本格的に始める",
     ],
-    skills: ["C#", "Illustration"],
+    skills: ["Illustration"],
     mainNode: true,
+  },
+  {
+    title: "初めてのHello, World",
+    highlights: [
+      "Hello, World!!",
+    ],
+    points: [
+      "初のマイコン以外のプログラミング",
+      "プログラミングの沼にハマる",
+      "オブジェクト指向",
+    ],
+    skills: ["C#"],
   },
   {
     title: "高専",
