@@ -9,6 +9,8 @@ import Footer from "./Footer";
 import { useScrollReveal } from "../hooks/useScrollReveal";
 import { useHashScroll } from "../hooks/useHashScroll";
 
+import { HighlightTheme } from "./HighlightTheme";
+
 export default function Layout(): React.JSX.Element{
 	useHashScroll();
 	useScrollReveal();
@@ -23,6 +25,8 @@ export default function Layout(): React.JSX.Element{
 
 	return (
 		<div className={`app ${isLightMode ? "" : "dark"}`}>
+			<HighlightTheme isLightMode={isLightMode}/>
+
 			<Header isLightMode={isLightMode} setIsLightMode={setIsLightMode} />
 			
 			<main>

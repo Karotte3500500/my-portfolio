@@ -174,14 +174,14 @@
 .blog-body code {
   padding: 0.18em 0.38em;
   border-radius: 6px;
-  background: var(--bg-soft);
+  background: var(--bg);
 }
 
 .blog-body pre {
   overflow-x: auto;
   padding: 18px;
-  border-radius: 18px;
-  background: var(--card);
+  border-radius: 10px;
+  background: var(--bg);
   border: 1px solid var(--line);
 }
 

@@ -1,0 +1,303 @@
+export const metadata  = {
+    slug: "created-portfolio-2",
+    title: "ポートフォリオ制作の技術について",
+    description: "ポートフォリオサイトを通じて、React.jsを学びました",
+    publishedAt: "2026-07-17",
+    tags: ["React", "TypeScript", "Portfolio", "Tech"],
+    coverImage: "/images/blog/eyecatch_code.jpg",
+    status: "public",
+};
+
+import BlogPostLink from "../../components/mdx/BlogPostLink";
+
+
+# ポートフォリオサイト制作
+本記事では、React.jsとTypeScriptを用いて制作したポートフォリオサイトについて、
+技術的な面を解説させていただきます。
+
+ポートフォリオ制作の切っ掛けは、以下の記事に詳細があります。
+<BlogPostLink slug="created-portfolio-1" />
+
+<br/>
+# 使用技術
+主な使用技術は以下のとおりです。
+- **React.js**
+- **TypeScript**
+- **Vite**
+- **MDX**
+- **Vercel**
+
+## React.js
+React.jsは、今回の主役となるフロントエンドライブラリです。
+以前からメジャーなフレームワークとして関心がありましたし、
+インターンシップのためにキャッチアップする必要がありますので、
+採用させていただきました。
+
+## TypeScript
+TypeScriptは型安全な言語なので、データの型を明確に管理するために採用させていただきました。  
+(~あと、個人的に型不安・動的型付けが苦手ですので……~)
+
+## Vite
+開発環境は使い慣れたViteを採用させていただきました。
+高速な開発サーバとビルド機能があり、開発を効率的に進められます。
+
+## MDX
+ブログ記事を自由に追加するためにMDXを導入しました。
+MDXとは、Markdown形式で記事を書きながら、Reactコンポーネントも記事内で使用することができる形式です。
+
+## Vercel
+ホスティングは自動デプロイや設定が簡単なVercelを採用させていただきました。
+自動デプロイは本当にすごくて、mainブランチにプッシュすると自動ですぐにデプロイされるので、
+手間が少なく小規模な開発であればメリットが大きいと思います。
+
+<br/>
+# コンポーネント設計
+本サイトでは、ページ全体を機能やセクションごとにコンポーネントを分離しています。
+例えばLPは、以下のようになっています。
+
+```tsx
+<section>
+    <Hero skipAnimation={shouldSkipHeroAnimation} />
+    <History/>
+    <Works/>
+    <Skills/>
+    <BlogLp/>
+    <Contact/>
+</section>
+```
+
+このように分割することで、各セクションの責務が明確になり、追加や修正が容易になります。
+また、特定のコードが肥大化することも防ぐことができます。
+
+## データの分離
+```Works```や```Skills```などでは表示内容を直接HTML文に記述するのではなく、
+```data/works.ts```と```data/skills.ts```のようなデータファイルに分離して、
+そのデータを```map```で展開して表示しています。
+### Worksの実装例
+<details>
+<summary>**works.ts**</summary>
+```ts
+export const works: Work[] = [
+    {
+        title: "はたちゃ",
+        category: [PC.Web, PC.SocialGood],
+        year:"2025 ~",
+        description:"農家向けの業務効率化とコミニティプラットフォームサービス。圃場管理や作業ログなどのサービスと、ノウハウの継承や交流を支援",
+        technologies:[Tech.JavaScript, Tech.VueJs, Tech.Firebase],
+        link:"https://github.com/Hatacha-net/hatacha_webApp_old"
+    },
+    {
+        title: "プラたべる",
+        category: [PC.Application, PC.Game, PC.SocialGood],
+        year:"2024",
+        description:"砂浜のプラスチック片を回収し、回収量や種類に応じてキャラクターが成長するアプリケーション",
+        technologies:[Tech.Csharp, Tech.Python, Tech.Unity],
+        link:"https://github.com/Karotte3500500/PlaTaberu"
+    },
+    // 以下省略
+];
+```
+</details>
+```Work型```の配列```works```を作成し、制作物の情報を列挙しています。
+制作物を追加する場合は、この配列を編集することで完結します。
+
+<details>
+<summary>**WorksView.tsx**</summary>
+```ts
+const [filterCategory, setFilterCategory] = useState<filterCategory>("ALL");
+    
+const selectedWorks =
+    filterCategory === "ALL" ? works : 
+    works.filter((work) => work.category.includes(filterCategory));
+```
+上記のコードでは、選択されたカテゴリーに合致する制作物の一覧を取得しています。  
+```useState```で宣言した変数はリアクティブなため、
+```filterCategoryCategory```が変化すると同時に一覧も更新されます。
+
+```tsx
+<div className="works-grid">
+    { selectedWorks.map( (work) => (
+        <WorkCard key={work.title} work={work}/>
+    ))}
+</div>
+```
+</details>
+```works.ts```からデータの一覧を取得し、```map```で展開したものを```WorkCard```コンポーネントに渡します。
+
+
+<details>
+<summary>**WorkCard.tsx**</summary>
+```tsx
+export default function WorkCard({ work }: WorkCardProps): React.JSX.Element{
+    return(
+        <article className="work-card" key={work.title}>
+            <div className="work-card-top">
+                <span className="tag">
+                    {work.category.map((cat, catIndex) => (
+                        <span key={cat}>{cat}{catIndex === work.category.length - 1 ? '' : ' / '}</span>
+                    ))}
+                </span>
+                <span className="year">{work.year}</span>
+            </div>
+            {/* 省略 */}
+        </article>
+    );
+}
+```
+</details>
+```WorksView.tsx```から渡された制作物の情報を表示します。
+
+<br/>
+これにより、作品やスキルなどを追加する際に、コンポーネントの構造を変更する必要がなくなり、
+今後の更新が容易になります。
+
+また、データの検索や並び替えをする場合も、データの分離は有効です。
+
+<br/>
+# ルーティングとページ構成
+このサイトは、LPだけでなくBlogページも追加しており、
+ルーティングは以下のようになっています。
+```
+/                   LP
+/blog               ブログ一覧
+/blog/:slug         ブログ記事
+```
+```/blog/:slug```のように、URLの一部を可変に設定することで、
+複数の記事ページを１つのコンポーネントで表示できるようにしています。
+
+例えば、```created-portfolio-1```というslugを持つ記事の場合、
+以下のようなURLになります。
+```
+/blog/created-portfolio-1
+```
+
+これにより、記事ごとに個別のコンポーネントを作る必要性がなくなり、
+ブログ記事を増やしても構成が複雑になりにくいメリットがあります。
+
+# MDXによるブログ機能
+この記事も含めて、ブログ記事はMDXで管理しています。
+通常のMarkdownでは、見出し、本文、リストなどを簡単に記述することができます。
+一方で、MDXでは、Markdownの中にReactコンポーネントを埋め込むことができるため、
+より自由な記事を書くことができます。
+
+たとえば、関連記事のリンクはMDX内で、以下のように記述しています。
+```md
+<BlogPostLink slug="created-portfolio-1" />
+```
+```BlogPostLink```はReactで定義したコンポーネントです。
+
+また、記事ごとにメタデータを定義し、タイトルや説明文、公開日、アイキャッチ画像などを管理しています。
+このメタデータを用いることで、ブログ一覧や関連記事リンクで、同じ情報を再利用できるようにしています。
+
+<details>
+<summary>**本記事のメタデータ**</summary>
+```ts
+export const metadata  = {
+    slug: "created-portfolio-2",
+    title: "ポートフォリオ制作の技術について",
+    description: "ポートフォリオサイトを通じて、React.jsを学びました",
+    publishedAt: "2026-07-17",
+    tags: ["React", "TypeScript", "Portfolio", "Tech"],
+    coverImage: "/images/blog/eyecatch_code.jpg",
+    status: "public",
+};
+```
+</details>
+
+<br/>
+
+# デザイン面の技術
+
+## テーマ管理
+CSS変数を用いて、ダークモードとライトモードを切り替えられるようにしています。
+
+また、テーマはReactの```useState```で状態を管理しており、
+選択したテーマをローカルストレージに保存しています。
+~これにより、ページを再読込しても、前回選択したテーマが維持されます。~  
+(現在、なぜか再読込するとリセットされます……)
+
+## アニメーション
+ページを移動する際のアニメーションには、```IntersectionObserver```を使用しました。
+
+<details>
+<summary>**useScrollReveal.ts**</summary>
+```ts
+useEffect(() => {
+    const targets = document.querySelectorAll<HTMLElement>(
+        ".reveal:not(.revealed)"
+    );
+
+    const observer = new IntersectionObserver(
+        (entries) => {
+        entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+            entry.target.classList.add("revealed");
+            observer.unobserve(entry.target);
+            }
+        });
+        },{
+        threshold: 0.16,
+        }
+    );
+
+    const animationFrameId = requestAnimationFrame(() => {
+        targets.forEach((target) => {
+        observer.observe(target);
+        });
+    });
+
+    return () => {
+        cancelAnimationFrame(animationFrameId);
+        observer.disconnect();
+    };
+);
+```
+</details>
+画面内に入った要素に```.revealed```クラスを付与し、
+CSSの```opacity```と```transform```を変化させることで、ふわっと表示される演出を実装しました。
+
+また、ReactRouterによるページ遷移後にもアニメーションが正しく動作するように、
+現在のパスを監視し、ページが切り替わる度に```.reveal```を再取得できるようにしました。
+
+<br/>
+# Git管理
+
+このサイトは、開発の初期段階では一つのブランチで開発していました。
+一方で、デプロイをしてからは後述する３つのブランチで開発を進めています。
+
+## mainブランチ
+実際にデプロイされる、最も重要なブランチです。
+基本的には他のブランチで機能が完成したり、記事の執筆が終わるとマージします。
+このブランチにプッシュすると、**Vercel**によって自動でデプロイされるため、
+最も慎重に扱う必要があります。
+
+## featureブランチ
+新しい機能を実装したり、サイトの一部を修正したりするためのブランチです。
+開発をするブランチをmainブランチと切り離すことで、
+本環境を保護したり、完成していない機能がデプロイされることを防ぎます。
+
+## articleブランチ
+ブログ記事を執筆するためのブランチです。
+現在はMDXファイルを直接追加して編集することで、ブログ記事を執筆しています。
+そのため、作業が競合したり、執筆中の記事が公開されないようにブランチを分けています。
+
+<br/>
+<br/>
+このようにブランチを分けることによって、本環境を壊してしまうことを恐れずに開発することができます。
+また、今までのGit管理は、チーム開発上で意識することが多く、誰がやるのかでブランチを分けていたのですが、個人開発でブランチを分けて管理することで、
+本環境と開発環境を明確に分離する考えを持つことができたと思います。
+
+<br/>
+# 最後に
+
+本記事ではReact.jsとTypeScriptを用いて制作したポートフォリオサイトの技術的な面について、
+触れさせていただきました。
+
+この開発を通じて、走り続けるサービスを作るのにはどのような管理が必要なのかを考える切っ掛けを得ることができました。
+そして、それを今後の開発やインターンシップでも活用できるようにしていきたいです。
+
+
+<br/>
+# 関連記事
+
+<BlogPostLink slug="created-portfolio-1" />
