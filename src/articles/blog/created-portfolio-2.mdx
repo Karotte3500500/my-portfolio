@@ -1,12 +1,12 @@
-export const metadata  = {
-    slug: "created-portfolio-2",
-    title: "ポートフォリオ制作の技術について",
-    description: "ポートフォリオサイトを通じて、React.jsを学びました",
-    publishedAt: "2026-07-17",
-    tags: ["React", "TypeScript", "Portfolio", "Tech"],
-    coverImage: "/images/blog/eyecatch_code.jpg",
-    status: "public",
-};
+---
+slug: "created-portfolio-2"
+title: "ポートフォリオ制作の技術について"
+description: "ポートフォリオサイトを通じて、React.jsを学びました"
+publishedAt: "2026-07-17"
+tags: ["React", "TypeScript", "Portfolio", "Tech"]
+coverImage: "/images/blog/eyecatch_code.jpg"
+status: "public"
+---
 
 import BlogPostLink from "../../components/mdx/BlogPostLink";
 
@@ -192,6 +192,17 @@ export default function WorkCard({ work }: WorkCardProps): React.JSX.Element{
 <details>
 <summary>**本記事のメタデータ**</summary>
 ```ts
+---
+slug: "created-portfolio-2"
+title: "ポートフォリオ制作の技術について"
+description: "ポートフォリオサイトを通じて、React.jsを学びました"
+publishedAt: "2026-07-17"
+tags: ["React", "TypeScript", "Portfolio", "Tech"]
+coverImage: "/images/blog/eyecatch_code.jpg"
+status: "public"
+---
+```
+```ts
 export const metadata  = {
     slug: "created-portfolio-2",
     title: "ポートフォリオ制作の技術について",
@@ -202,6 +213,23 @@ export const metadata  = {
     status: "public",
 };
 ```
+</details>
+
+<details>
+<summary>~**旧メタデータ**~</summary>
+```ts
+```ts
+export const metadata  = {
+    slug: "created-portfolio-2",
+    title: "ポートフォリオ制作の技術について",
+    description: "ポートフォリオサイトを通じて、React.jsを学びました",
+    publishedAt: "2026-07-17",
+    tags: ["React", "TypeScript", "Portfolio", "Tech"],
+    coverImage: "/images/blog/eyecatch_code.jpg",
+    status: "public",
+};
+```
+Frontmatter形式への変更に伴い、メタデータのフォーマットを変更しました。
 </details>
 
 <br/>

@@ -1,5 +1,5 @@
 import type { ComponentType } from "react";
-import type { BlogMetadata, BlogPost } from "../types/blog";
+import type { BlogMetadata, BlogPost } from "../types/blog.ts";
 
 type BlogModule = {
     metadata: BlogMetadata;

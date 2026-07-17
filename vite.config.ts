@@ -1,13 +1,16 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
-import Sitemap from "vite-plugin-sitemap"
-
-import { getBlogRouters } from "./src/lib/blog.ts";
 
 //記事用のMDX
 import mdx from "@mdx-js/rollup";
 import remarkGfm from 'remark-gfm';
+import remarkFrontmatter from "remark-frontmatter";
+import remarkMdxFrontmatter from "remark-mdx-frontmatter";
 import rehypeHighlight from 'rehype-highlight';
+import { sitemapPlugin } from './build/sitemapPlugin.ts';
+import { getBlogSitemapEntries } from './build/getBlogSitemapEntries.ts';
+
+const blogSitemapEntries = getBlogSitemapEntries();
 
 // https://vite.dev/config/
 export default defineConfig({
@@ -16,7 +19,16 @@ export default defineConfig({
     {
       enforce: "pre",
       ...mdx({
-        remarkPlugins: [remarkGfm],
+        remarkPlugins: [
+          remarkFrontmatter,
+          [
+            remarkMdxFrontmatter,
+            {
+              name: "metadata",
+            }
+          ],
+          remarkGfm
+        ],
         rehypePlugins: [rehypeHighlight],
       }),
     },
@@ -25,9 +37,19 @@ export default defineConfig({
     react({include: /\.(js|jsx|ts|tsx|md|mdx)$/,}),
 
     //サイトマップ
-    Sitemap({
+    sitemapPlugin({
       hostname: "https://nawata.me",
-      dynamicRoutes: ["/", "/blog", ...getBlogRouters()]
+
+      entries: [
+        {
+          path: "/",
+        },
+        {
+          path: "/blog",
+        },
+
+        ...blogSitemapEntries,
+      ]
     })
   ],
 });
