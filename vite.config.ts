@@ -2,6 +2,8 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import Sitemap from "vite-plugin-sitemap"
 
+import { getBlogRouters } from "./src/lib/blog.ts";
+
 //記事用のMDX
 import mdx from "@mdx-js/rollup";
 import remarkGfm from 'remark-gfm';
@@ -25,7 +27,7 @@ export default defineConfig({
     //サイトマップ
     Sitemap({
       hostname: "https://nawata.me",
-      dynamicRoutes: ["/", "/blog", "/blog/:slug"]
+      dynamicRoutes: ["/", "/blog", ...getBlogRouters()]
     })
   ],
 });

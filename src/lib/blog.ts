@@ -24,3 +24,7 @@ export const blogPosts: BlogPost[] = Object.values(modules)
 export function getBlogPostBySlug(slug: string): BlogPost | undefined{
     return blogPosts.find((post) => post.metadata.slug === slug);
 }
+
+export function getBlogRouters(): string[]{
+    return blogPosts.map((post) => `/${post.metadata.slug}`);
+}
