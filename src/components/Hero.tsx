@@ -26,8 +26,6 @@ export default function Hero({ skipAnimation = false }: HeroProps): React.JSX.El
     return(
         <section className={`hero section ${skipAnimation ? "skip-animation" : ""}`} id="top">
             <div className="hero-bg" aria-hidden="true">
-                {/* <span className="orb orb-1"></span>
-                <span className="orb orb-2"></span> */}
                 <span className="grid-bg"></span>
             </div>
 

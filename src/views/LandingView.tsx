@@ -20,8 +20,8 @@ function Landing(): React.JSX.Element {
 				<meta name="description" content="縄田嵐のポートフォリオサイト。高専生としてC#とWebなどのIT技術を中心にものづくりをしています。就活、インターン、共同開発のお問い合わせも歓迎です。"/>
 				<meta property="og:type" content="website" />
   				<meta property="og:url" content="https://www.nawata.me/" />
-  				<meta property="og:site_name" content="Nawata's Lab" />
-
+  				<meta property="og:site_name" content="縄田 嵐 | Nawata's Lab" />
+				<meta property="og:title" content="縄田 嵐 | Nawata's Lab" />
 				{/* あれ */}
 				<meta property="og:image" content="https://www.nawata.me/images/blog/created-portfolio-1/portfolio_sc.png" />
   				<meta property="og:image:width" content="1200" />
