@@ -1,5 +1,6 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
+import Sitemap from "vite-plugin-sitemap"
 
 //記事用のMDX
 import mdx from "@mdx-js/rollup";
@@ -20,5 +21,11 @@ export default defineConfig({
 
     //React
     react({include: /\.(js|jsx|ts|tsx|md|mdx)$/,}),
+
+    //サイトマップ
+    Sitemap({
+      hostname: "https://nawata.me",
+      dynamicRoutes: ["/", "/blog", "/blog/:slug"]
+    })
   ],
 });
