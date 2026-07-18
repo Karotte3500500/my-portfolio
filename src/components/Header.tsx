@@ -40,9 +40,9 @@ export default function Header({ isLightMode, setIsLightMode }: HeaderProps): Re
         <header className="site-header">
             <Link className="logo" to={{pathname: "/", hash: "#top"}}>
                 <span className="logo-mark">
-                    <img src="/images/portfolio_logo_light.svg"/>
+                    <img src="/images/portfolio_logo_mono_cg.svg"/>
                 </span>
-                <span className="logo-text">Arashi Nawata</span>
+                <span className="logo-text">Nawata's Lab</span>
             </Link>
 
             <nav>

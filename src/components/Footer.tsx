@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { navItems } from "../data/navItems";
 import "./Footer.css"
+import profileImg from "../assets/myface_icon.png"
 
 const socialLinks = [
   {
@@ -27,10 +28,10 @@ export default function Footer(): React.JSX.Element {
               hash: "#top",
             }}
           >
-            <span className="logo-mark">
-              <img src="/images/portfolio_logo_light.svg"/>
+            <span className="profile-avatar-footer">
+              <img src={profileImg}/>
             </span>
-            <span className="logo-text">Arashi Nawata</span>
+            <span className="profile-text-footer">縄田 嵐<span className="profile-text-footer-a"> Arashi Nawata</span></span>
           </Link>
 
           <p>

@@ -98,7 +98,7 @@
 }
 
 .blog-article {
-  max-width: 1000px;
+  max-width: 900px;
   padding: 40px;
   background-color: var(--bg-soft);
 }

@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import "./Hero.css";
-import profileImg from "../assets/profile.jpg"
+import profileImg from "../assets/myface_icon.png"
 
 type HeroProps = {
     skipAnimation?: boolean;
