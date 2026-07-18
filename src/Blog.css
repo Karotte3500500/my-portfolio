@@ -75,7 +75,7 @@
   color: var(--lead);
 }
 
-.blog-tags {
+.blog-tags { 
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
@@ -99,7 +99,7 @@
 
 .blog-article {
   max-width: 900px;
-  padding: 40px;
+  padding: 50px;
   background-color: var(--bg-soft);
 }
 
@@ -205,4 +205,26 @@
   border-color: var(--line);
   margin: 5px;
   margin-top: 40px
+}
+
+@media (max-width: 800px) {
+  .blog-article {
+    padding: 10px;
+  }
+  .blog-coverImage {
+    width: 103%;
+    margin-left: -1.5%;
+  }
+  .blog-body p{
+    font-size: 0.9rem;
+  }
+  .blog-body h1 {
+    font-size: 1.9rem;
+  }
+   .blog-body h2 {
+    font-size: 1.6rem;
+  }
+  .blog-body pre {
+    font-size: 0.8rem;
+  }
 }
