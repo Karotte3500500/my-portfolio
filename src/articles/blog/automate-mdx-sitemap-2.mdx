@@ -1,0 +1,163 @@
+---
+slug: "automate-mdx-sitemap-2"
+title: "サイトマップを自動生成した話 -２"
+description: "サイトマップの動的生成のためにViteの機能とNode.jsの機能を分離した話です。"
+publishedAt: "2026-07-19"
+tags: ["React", "TypeScript", "Portfolio", "備忘録", "Tech"]
+coverImage: "/images/blog/memo_eyecatch.png"
+status: "public"
+---
+
+import BlogPostLink from "../../components/mdx/BlogPostLink";
+
+
+# 現状の問題
+
+ブログ記事の一覧をViteの固有機能である```glob```でインポートし、
+URLを動的にサイトマップに登録する仕組を作ろうとしたところ、
+```vite-config.ts```はNode.jsで実行されるためエラーが発生してしまいました。
+
+詳細は以下の記事をご覧ください。
+<BlogPostLink slug="automate-mdx-sitemap-1"/>
+
+# ReactとNode.jsの処理を分離する
+
+現状の問題を解決するために、記事情報の読み込み処理を２つに分けることにしました。
+- **Reactアプリ**：```import.meta.glob()```でMDXを読み込む
+- **vite.config.ts**：Node.jsのファイル操作でMDXを読み込む
+
+こうすることで、ブログページ一覧やその他のWebアプリ内で使う読み込み処理を保ちつつ、
+```vite-config.ts```では```glob```を使わないため問題が起きません。
+
+# Node.jsがMDXを実行できない問題
+
+Node.jsでMDXファイル一覧を取得し、そこからメタデータを抽出することができれば、
+目的は達成されるのですが、中々一筋縄では行けません。
+
+MDXファイルでは、JavaScriptの処理を書くことができるため、
+以下のようにJavaScriptの構文を用いてメタデータを書くことができました。
+```ts
+export const metadata  = {
+    slug: "created-portfolio-2",
+    title: "ポートフォリオ制作の技術について",
+    description: "ポートフォリオサイトを通じて、React.jsを学びました",
+    publishedAt: "2026-07-17",
+    tags: ["React", "TypeScript", "Portfolio", "Tech"],
+    coverImage: "/images/blog/eyecatch_code.jpg",
+    status: "public",
+};
+```
+しかし、標準のNode.jsはMDX形式の実行に対応していません。
+そのため、Node.js側で```readFileSync()```で読み取った場合、
+ただの文字列しか得られません。
+
+また、単純にimportした場合、
+MDX全体をコンパイルしてReactやコンポーネントを解決する必要があります。
+こうなると、本末転倒ですね。
+
+## Frontmatterの採用
+
+ここで採用したのがFrontmatterです。
+rontmatterとは、Markdownファイルの先頭に記述するメタデータのブロックです。
+```ts
+---
+slug: "created-portfolio-2"
+title: "ポートフォリオ制作の技術について"
+description: "ポートフォリオサイトを通じて、React.jsを学びました"
+publishedAt: "2026-07-17"
+tags: ["React", "TypeScript", "Portfolio", "Tech"]
+coverImage: "/images/blog/eyecatch_code.jpg"
+status: "public"
+---
+```
+Frontmatterでは、MDXファイルの先頭に上記のようなメタデータを記入することができます。
+旧メタデータと異なり、Frontmatterは純粋はデータであるため、実行する必要がありません。
+```ts
+const source = readFileSync(filePath, "utf-8");
+const { data } = matter(source);
+```
+また、Node.js側では上記のように```gray-matter```を用いることで、
+旧メタデータと同様のオブジェクトを取得することができます。
+
+## React側でのFrontmatter
+
+Frontmatterを採用することで、Node.js側では読み取り安くなりますが、
+このままでは既存のコードで読み取ることはできません。
+
+そのため、```remark-frontmatter```と```remark-mdx-frontmatter```のパッケージを追加しました。
+<details>
+<summary>インストールのコマンド</summary>
+```bash
+npm install -D remark-frontmatter remark-mdx-frontmatter
+```
+</details>
+```ts
+import remarkFrontmatter from "remark-frontmatter";
+import remarkMdxFrontmatter from "remark-mdx-frontmatter";
+// 省略
+mdx({
+    remarkPlugins: [
+        remarkFrontmatter,
+        [
+            remarkMdxFrontmatter,
+            {
+                name: "metadata",
+            },
+        ],
+
+        remarkGfm,
+    ],
+    //省略
+});
+```
+
+そして、```vite.config.ts```のMDX設定に2つのプラグインを追加します。
+
+### 各プラグインの役割
+- **remark-frontmatter**：MDX内の```---```で囲まれた箇所をFrontmatterと認識
+- **remark-mdx-frontmatter**：認識したFrontmatterをJavaScriptへエクスポート
+
+```ts
+[ remarkMdxFrontmatter, { name: "metadata", }, ]
+```
+上記の設定をすることで、Frontmatterは内部的に以下のよう形式になります。
+
+```ts
+export const metadata = {
+    title: "...",
+    slug: "...",
+    publishedAt: "...",
+    status: "...",
+};
+```
+このようにすることで、FrontmatterをMDXにJavaScriptの構文を書いたことと同様に扱うことができるようになり、
+既存のReact側の処理を利用し続けることができます。
+
+# 裏ボスの登場
+これにより、アプリケーション側のMDXファイルの読み込み処理と、
+```vite-config.ts```のNOde.js側の処理を分離しつつ、
+MDXファイルのメタデータを共通の形式で扱うことに成功しました。
+
+これで遂に一見落着だと思い、満を持してビルドをしたところ……
+
+```error
+Error: ENOENT: no such file or directory,
+open '/home/XXXX/dist/robots.txt'
+```
+
+上記のようなエラーが発生してしまいました。
+
+そうです、まだ戦いは終わっていなかったのです……。
+
+<br/>
+# 最後に
+
+次回の記事では、どのようにこの裏ボスを攻略したのかについて触れたいと思います。
+
+この記事は備忘録と冠していますが、一連のシリーズモノのように見えてきました。
+次回が最終回ですので、ご安心ください。
+
+<br/>
+# 関連記事
+
+<BlogPostLink slug="automate-mdx-sitemap-1"/>
