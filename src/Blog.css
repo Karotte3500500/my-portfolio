@@ -231,6 +231,9 @@
   .blog-body p{
     font-size: 0.9rem;
   }
+  .blog-body li{
+    font-size: 0.9rem;
+  }
   .blog-body h1 {
     font-size: 1.9rem;
   }
