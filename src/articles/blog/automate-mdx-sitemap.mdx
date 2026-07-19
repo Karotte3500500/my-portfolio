@@ -1,0 +1,192 @@
+---
+slug: "automate-mdx-sitemap-1"
+title: "サイトマップを自動生成した話 -１"
+description: "ブログ記事のURLを自動でサイトマップに登録する仕組みで発生した課題について"
+publishedAt: "2026-07-19"
+tags: ["React", "TypeScript", "Portfolio", "備忘録", "Tech"]
+coverImage: "/images/blog/memo_eyecatch.png"
+status: "public"
+---
+
+import BlogPostLink from "../../components/mdx/BlogPostLink";
+
+
+# MDXブログのURLをサイトマップへ自動登録したい
+
+つい先日、このサイトを制作し世の中に発信することができましたが、
+まだ検索エンジンに見つけて貰えるようにはなっていませんでした。
+
+そこで、Google Search Console へサイトの構成を表すサイトマップを生成して送る必要がありました。
+しかし、ここである課題が見つかったのです。
+
+サイトマップの生成は、```vite-plugin-sitemap```をインストールして
+```vite.config.ts```に以下のようにルートを登録すれば簡単に行えます。
+```ts
+Sitemap({
+	hostname: "https://nawata.me",
+	dynamicRoutes: [
+		"/",		//LP
+		"/blog", 	//ブログ一覧
+	], 
+});
+```
+そして、Google Search Console へサイトマップを送信する際は、
+GoDaddyでドメインを取得していたため、GoDaddyとGoogleを連携させて、
+サイトマップのURLを送るだけで完了しました。
+
+このように、サイトマップをGoogle Search Console に送るだけであれば、
+特に問題は起こりません。
+
+## MDXブログでの課題
+では、どのような課題が出てきたのでしょうか？  
+
+サイトマップは、上述したように```vite.config.ts```の```Sitemap```に、
+直接ルートを登録することで、生成することができます。
+
+この方法は、**ルートが確定しているページ**（LPやブログ一覧など）の場合、
+簡単に設定することができます。
+
+一方で、ブログ記事のページでは、直接URLを設定しているのではなく、
+記事の本体である**MDXファイルのメタデータ**の```slug```を参照してURLを作っています。
+
+これは、ブログ記事の追加や削除を簡単に行ったり、公開や非公開の設定を容易にしたりするためです。
+
+そのため、ブログ記事ページのルートを直接サイトマップに登録することは考えられません。  
+（一応、記事を変更する度に設定すれば可能ではあります）
+
+従って、ブログ記事のURLをサイトマップへ動的に登録する仕組みを考える必要が出てきたのです。
+
+<br/>
+# 当初のアプローチ
+この課題が見つかった際、自分はすぐに解決できるだろうと高を括っていました。  
+なぜなら、ブログ記事（MDXファイル）を配列として取得する処理は既にあったため、
+そこから```slug```だけを抽出しURLを生成する関数を作れば解決すると考えていたからです。
+
+## ブログ記事一覧の取得
+```ts
+const modules = import.meta.glob<BlogModule>(
+    "../articles/blog/*.mdx",
+    {
+        eager: true,
+    }
+);
+```
+まず、```import.meta.glob```(***ここ重要***)を用いて、
+ブログディレクトリ下にあるすべてのMDXファイルをインポートします。
+
+```eager: true```となっているため、ビルド時にすべてのファイルが読み込まれるようになっています。
+
+```ts
+export const blogPosts: BlogPost[] = Object.values(modules)
+    .map((module) => ({
+        metadata: module.metadata,
+        Component: module.default,
+    }))
+    .filter(
+        (post) =>
+            post.metadata.status === "public"
+    )
+    .sort((a, b) =>
+        b.metadata.publishedAt.localeCompare(
+            a.metadata.publishedAt
+        )
+    );
+```
+そして、```Object.values(modules)```でファイルの値を抽出し、
+mapやらfilterで欲しいデータを選択します。
+これで、ブログ記事（MDXファイル）の配列を取得することに成功しました。
+
+ちなみに、ここまでは実装済みでした。
+
+## 動的URL登録の実装
+```ts
+export function getBlogRouters(): string[] {
+    return blogPosts.map(
+        (post) => `/blog/${post.metadata.slug}`
+    );
+}
+```
+そして、ブログ記事のメタデータから```slug```だけを抽出し、
+URLを生成して配列にする関数を定義しました。
+
+```ts
+import { getBlogRouters } from "./src/lib/blog";
+
+Sitemap({
+    hostname: "https://nawata.me",
+    dynamicRoutes: [
+        "/",
+        "/blog",
+        ...getBlogRouters(),
+    ],
+});
+```
+そして、この関数を```vite.config.ts```の```Sitemap```で呼び出すことで、
+動的にURLを登録でき……
+
+## globが参照できない！！
+```error
+XXX/XXX/blog.ts:9:29
+- error TS2339: Property 'glob' does not exist on type 'ImportMeta'.
+9 const modules = import.meta.glob<BlogModule>( ~~~~ 
+
+XXX/XXX/blog.ts:16:19
+- error TS18046: 'module' is of type 'unknown'. 
+16 metadata: module.metadata, ~~~~~~ 
+
+XXX/XXX/blog.ts:17:20 
+- error TS18046: 'module' is of type 'unknown'. 
+17 Component: module.default, ~~~~~~
+```
+上述のアプローチでビルドしてみると、エラーが発生してしまいました。
+どうやら、「```glob```型なんて知らない！！」と怒っているようです。
+
+そんなことを言われても心当たりがないので、ChatGPTに相談しました。
+
+> 原因は、TypeScriptがVite固有の型定義を読み込めていないことです。
+> import.meta.glob() はJavaScript標準ではなくVite独自の機能なので、vite/client の型定義が必要です。
+> Vite公式でも import.meta.glob() はVite固有機能として提供されています。
+
+要約すると、```glob```はViteの機能だから、ちゃんと使うときは型定義をしろよ？というアドバイスです。
+
+そして、```src/vite-env.d.ts```を確認して、以下の一行があるか確認するように言われました。
+```ts
+/// <reference types="vite/client" />
+```
+どうやら、```vite/client```にはViteが提供している型定義があるようで、
+これを使えば解決すると考えたようです。
+
+しかし困りました。  
+**```src/vite-env.d.ts```は既に完璧な状態だったのです。**
+
+# 本当の問題
+
+では、一体なにが問題だったのでしょうか？  
+察しの良い人や詳しい方なら既に気が付いていると思いますが、
+```vite.config.ts```で**Viteの固有機能を使っていることが問題**だったのです。
+
+```glob```はViteによって変換される、アプリ側の機能です。
+一方で、```vite.config.ts```はNode.js環境で実行される設定ファイルです。
+
+そのため、```vite.config.ts```からは```glob```を参照できず、
+このような問題が発生してしまったようです。
+
+<br/>
+# 最後に
+
+本記事では、ブログ記事のURLを自動でサイトマップに登録する仕組みで発生した課題について、
+触れさせていただきました。
+もっとも、**今回の原因は**サイトマップではなく、
+```vite.config.ts```でViteの固有機能を使ってしまったことでした。
+
+冷静に考えれば、すぐに気付くことができるような問題ですが、
+いざ問題が起きると盲目になってしまうものですね。
+
+さて、この問題をどのように解決したのか語りますと、非常に長くなってしまうため、
+今回の記事はここまでにさせていただきます。
+続きは別の記事で書くつもりです。
+
+<br/>
+# 関連記事
+
+<BlogPostLink slug="created-portfolio-2"/>
