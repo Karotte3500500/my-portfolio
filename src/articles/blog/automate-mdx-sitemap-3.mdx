@@ -1,21 +1,20 @@
 ---
-slug: "automate-mdx-sitemap-2"
-title: "サイトマップを自動生成した話 -２"
-description: "サイトマップの動的生成のためにViteの機能とNode.jsの機能を分離した話です。"
+slug: "automate-mdx-sitemap-3"
+title: "サイトマップを自動生成した話 -３"
+description: "既存のサイトマッププラグインで問題が発生したため、プラグインを自作した話です。"
 publishedAt: "2026-07-19"
 tags: ["React", "TypeScript", "Portfolio", "備忘録", "Tech"]
 coverImage: "/images/blog/memo_eyecatch.png"
-status: "public"
+status: "draft"
 ---
 
 import BlogPostLink from "../../components/mdx/BlogPostLink";
 
 
-# 現状の問題
+# 裏ボスの登場
 
-ブログ記事の一覧をViteの固有機能である```glob```でインポートし、
-URLを動的にサイトマップに登録する仕組を作ろうとしたところ、
-```vite.config.ts```はNode.jsで実行されるためエラーが発生してしまいました。
+前回、Reactアプリ側の処理とNode.jsの処理を分離することで、
+```vite.config.ts```に記事一覧を渡して解決しました。
 
 詳細は以下の記事をご覧ください。
 <BlogPostLink slug="automate-mdx-sitemap-1"/>
@@ -155,12 +154,9 @@ open '/home/XXXX/dist/robots.txt'
 次回の記事では、どのようにこの裏ボスを攻略したのかについて触れたいと思います。
 
 この記事は備忘録と冠していますが、一連のシリーズモノのように見えてきました。
-一応、備忘録としては、```vite.config.ts```でアプリ側の処理を使ってはいけないということですね。
-
-ちなみに、次回が最終回ですのでご安心ください。
+次回が最終回ですので、ご安心ください。
 
 <br/>
 # 関連記事
 
-<BlogPostLink slug="automate-mdx-sitemap-3"/>
 <BlogPostLink slug="automate-mdx-sitemap-1"/>
