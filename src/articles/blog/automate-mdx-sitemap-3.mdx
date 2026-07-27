@@ -2,10 +2,10 @@
 slug: "automate-mdx-sitemap-3"
 title: "サイトマップを自動生成した話 -３"
 description: "既存のサイトマッププラグインで問題が発生したため、プラグインを自作した話です。"
-publishedAt: "2026-07-19"
+publishedAt: "2026-07-24"
 tags: ["React", "TypeScript", "Portfolio", "備忘録", "Tech"]
 coverImage: "/images/blog/memo_eyecatch.png"
-status: "draft"
+status: "public"
 ---
 
 import BlogPostLink from "../../components/mdx/BlogPostLink";
@@ -13,150 +13,238 @@ import BlogPostLink from "../../components/mdx/BlogPostLink";
 
 # 裏ボスの登場
 
-前回、Reactアプリ側の処理とNode.jsの処理を分離することで、
-```vite.config.ts```に記事一覧を渡して解決しました。
+テスト週間に入ってしまったため、前回の投稿から時間が空いてしまいました。
 
+前回は、Reactアプリ側の処理とNode.jsの処理を分離することで、
+```vite.config.ts```に記事一覧を渡そうとしました。
+しかし、あるエラーが発生してしまい、ビルドに失敗してしまいました。
+
+どのような問題があり、どのように解決したのかを本記事で解説しようと思います。
+<br/>
 詳細は以下の記事をご覧ください。
 <BlogPostLink slug="automate-mdx-sitemap-1"/>
 
-# ReactとNode.jsの処理を分離する
+# 裏ボスの正体
+```error
+> tsc -b && vite build
 
-現状の問題を解決するために、記事情報の読み込み処理を２つに分けることにしました。
-- **Reactアプリ**：```import.meta.glob()```でMDXを読み込む
-- **vite.config.ts**：Node.jsのファイル操作でMDXを読み込む
+vite v8.1.3 building client environment for production...
+✓ 73 modules transformed.
+✗ Build failed in 984ms
 
-こうすることで、ブログページ一覧やその他のWebアプリ内で使う読み込み処理を保ちつつ、
-```vite.config.ts```では```glob```を使わないため問題が起きません。
+Error: ENOENT: no such file or directory,
+open '/home/XXXX/dist/robots.txt'
 
-# Node.jsがMDXを実行できない問題
-
-Node.jsでMDXファイル一覧を取得し、そこからメタデータを抽出することができれば、
-目的は達成されるのですが、なかなか一筋縄では行けません。
-
-MDXファイルでは、JavaScriptの処理を書くことができるため、
-以下のようにJavaScriptのオブジェクトとしてメタデータを書くことができました。
-```ts
-export const metadata  = {
-    slug: "created-portfolio-2",
-    title: "ポートフォリオ制作の技術について",
-    description: "ポートフォリオサイトを通じて、React.jsを学びました",
-    publishedAt: "2026-07-17",
-    tags: ["React", "TypeScript", "Portfolio", "Tech"],
-    coverImage: "/images/blog/eyecatch_code.jpg",
-    status: "public",
-};
+at writeFileSync (node:fs:2414:20)
+at generateSitemap (file:///home/XXXX/node_modules/vite-plugin-sitemap/dist/index.js:11199:5)
+at PluginContextImpl.closeBundle (file:///home/XXXX/node_modules/vite-plugin-sitemap/dist/index.js:11221:7)
+at PluginContextImpl.handler (file:///home/XXXX/n"/images/blog/memo_eyecatch.png"ode_modules/vite/dist/node/chunks/node.js:32882:13)
+at plugin (file:///home/XXXX/node_modules/rolldown/dist/shared/bindingify-input-options-BsDhfYrS.mjs:1739:18)
+at plugin.<computed> (file:///home/XXXX/rolldown/dist/shared/bindingify-input-options-BsDhfYrS.mjs:1961:18)
+{
+    errno: -2,
+    code: 'PLUGIN_ERROR',
+    syscall: 'open',
+    path: '/home/XXXX/dist/robots.txt', pluginCode: 'ENOENT',
+    plugin: 'vite-plugin-sitemap',
+    hook: 'closeBundle'
+}
 ```
-しかし、標準のNode.jsはMDX形式の実行に対応していません。
-そのため、Node.js側で```readFileSync()```で読み取った場合、
-ただの文字列しか得られません。
+今回発生したエラーとログの内容は、上記のとおりです。  
 
-また、単純にimportした場合、
-MDX全体をコンパイルしてReactやコンポーネントを解決する必要があります。
-こうなると、本末転倒ですね。
-
-## Frontmatterの採用
-
-ここで採用したのがFrontmatterです。
-Frontmatterとは、Markdownファイルの先頭に記述するメタデータのブロックです。
-```ts
----
-slug: "created-portfolio-2"
-title: "ポートフォリオ制作の技術について"
-description: "ポートフォリオサイトを通じて、React.jsを学びました"
-publishedAt: "2026-07-17"
-tags: ["React", "TypeScript", "Portfolio", "Tech"]
-coverImage: "/images/blog/eyecatch_code.jpg"
-status: "public"
----
+## 前回と同じ問題ではない
 ```
-Frontmatterでは、MDXファイルの先頭に上記のようなメタデータを記入することができます。
-旧メタデータと異なり、Frontmatterは純粋はデータであるため、実行する必要がありません。
-```ts
-const source = readFileSync(filePath, "utf-8");
-const { data } = matter(source);
+tsc -b && vite build
 ```
-また、Node.js側では上記のように```gray-matter```を用いることで、
-旧メタデータと同様のオブジェクトを取得することができます。
+これは、**差分の型チェックをした後に、全体のビルドをするという意味**です。
 
-## React側でのFrontmatter
+```tsc -b```では、前のビルドの前に変更されたファイルを確認し、型を確認するコマンドです。
+一方で```vite build```は全体をビルドするコマンドです。
+そして、この２つのコマンドを```&&```で結んでいます。
+```&&```は左側のコマンドが正常に実行できた場合、右側のコマンドを実行するという記号です。
 
-Frontmatterを採用することで、Node.js側では読み取り安くなりますが、
-このままでは既存のコードで読み取ることはできません。
+```tsc -b```が失敗した場合はviteは立ち上がらないため、
+仮に```glob```で失敗した場合はtscのエラーが発生するはずです。
 
-そのため、```remark-frontmatter```と```remark-mdx-frontmatter```のパッケージを追加しました。
-<details>
-<summary>インストールのコマンド</summary>
-```bash
-npm install -D remark-frontmatter remark-mdx-frontmatter
-```
-</details>
-```ts
-import remarkFrontmatter from "remark-frontmatter";
-import remarkMdxFrontmatter from "remark-mdx-frontmatter";
-// 省略
-mdx({
-    remarkPlugins: [
-        remarkFrontmatter,
-        [
-            remarkMdxFrontmatter,
-            {
-                name: "metadata",
-            },
-        ],
+しかし、今回の場合```vite v8.1.3 building ...```というログが出ているため、
+viteのビルドが動いていることが分かり、**```glob```で問題が発生していない**ことが分かります。
 
-        remarkGfm,
-    ],
-    //省略
-});
-```
-
-そして、```vite.config.ts```のMDX設定に2つのプラグインを追加します。
-
-### 各プラグインの役割
-- **remark-frontmatter**：MDX内の```---```で囲まれた箇所をFrontmatterと認識
-- **remark-mdx-frontmatter**：認識したFrontmatterをJavaScriptへエクスポート
+<br/>
+また、今回の場合、```vite.config.ts```の読み込みも成功していると考えられます。
 
 ```ts
-[ remarkMdxFrontmatter, { name: "metadata", }, ]
+const blogSitemapEntries = getBlogSitemapEntries();
 ```
-上記の設定をすることで、Frontmatterは内部的に以下のよう形式になります。
-
-```ts
-export const metadata = {
-    title: "...",
-    slug: "...",
-    publishedAt: "...",
-    status: "...",
-};
+```vite.config.ts```を読み込む際に、上の処理が実行されます。
+```txt
+vite.config.tsを読み込む
+  ↓
+getBlogSitemapEntries()を実行
+  ↓
+MDXファイルを探す
+  ↓
+Frontmatterを読み取る
+  ↓
+公開記事のURL一覧を作る
+  ↓
+Viteのビルドを開始
 ```
-このようにすることで、FrontmatterをMDXにJavaScriptのオブジェクトを定義する場合と同様に扱うことができるようになり、
-既存のReact側の処理を利用し続けることができます。
+そのため、```vite.config.ts```での処理順は上記のように進みます。
 
-# 裏ボスの登場
-これにより、アプリケーション側のMDXファイルの読み込み処理と、
-```vite.config.ts```のNode.js側の処理を分離しつつ、
-MDXファイルのメタデータを共通の形式で扱うことに成功しました。
+もし、```getBlogSitemapEntries()```で例外が発生した場合は、viteは設定ファイルを最後まで読み込むことができません。
+しかし、```✓ 73 modules transformed.```まで進んでいるため、```vite.config.ts```の読み込みと、
+```getBlogSitemapEntries()```は少なくとも例外を出さずに完了したと考えられます。
 
-これで遂に一見落着だと思い、満を持してビルドをしたところ……
+そのため、前回までの**記事の一覧を取得することに失敗していたわけではなさそう**です。
 
+## 問題の正体
 ```error
 Error: ENOENT: no such file or directory,
 open '/home/XXXX/dist/robots.txt'
+
+at writeFileSync (node:fs:2414:20)
+at generateSitemap (file:///home/XXXX/node_modules/vite-plugin-sitemap/dist/index.js:11199:5)
+at PluginContextImpl.closeBundle (file:///home/XXXX/node_modules/vite-plugin-sitemap/dist/index.js:11221:7)
+at PluginContextImpl.handler (file:///home/XXXX/node_modules/vite/dist/node/chunks/node.js:32882:13)
+at plugin (file:///home/XXXX/node_modules/rolldown/dist/shared/bindingify-input-options-BsDhfYrS.mjs:1739:18)
+at plugin.<computed> (file:///home/XXXX/rolldown/dist/shared/bindingify-input-options-BsDhfYrS.mjs:1961:18)
+{
+    errno: -2,
+    code: 'PLUGIN_ERROR',
+    syscall: 'open',
+    path: '/home/XXXX/dist/robots.txt', pluginCode: 'ENOENT',
+    plugin: 'vite-plugin-sitemap',
+    hook: 'closeBundle'
+}
+```
+スタックレースを確認すると、```vite-plugin-sitemap```による処理と```writeFileSync()```が見当たります。
+```vite-plugin-sitemap```はサイトマップを生成するプラグインであり、
+```writeFileSync()```は最終的に```robots.txt```を書き込むための処理です。
+
+```txt
+vite-plugin-sitemapのcloseBundle
+    ↓
+generateSitemap()
+    ↓
+writeFileSync()
+    ↓
+dist/robots.txtへの書き込みに失敗
 ```
 
-上記のようなエラーが発生してしまいました。
+そして、上記のようにサイトマップを生成するためのプラグインが、
+```writeFileSync()```を使って直接```robots.txt```を書き換えようとして失敗していたのです。
 
-そうです、まだ戦いは終わっていなかったのです……。
+これは、ビルド終了時にプラグインが想定していた状態で```dist```ディレクトリが存在していなかったことが原因だと考えられます。
+
+Vite8ではビルド基盤がRollupからRolldownへ変更されているため、
+既存プラグインが想定していた実行タイミングや前提が合わなくなった可能性が考えられますが、
+断定はできません。
+ただ、```vite-plugin-sitemap```が```closeBundle```内で```dist```に直書きしようとした処理が失敗したことは確かでした。
+
+# プラグインの自作
+ということで、```dist```へ直接書き込むのではなく、サイトマップと```robots.txt```をViteの正式ビルドの
+成果物として登録する方針にしました。
+
+そのために、```generateBundle```と'''emitFile()'''を用いることにしました。
+```ts
+generateBundle() {
+    this.emitFile({
+        type: "asset",
+        fileName: "sitemap.xml",
+        source: sitemapXml, 
+    });
+}
+```
+Viteプラグインでは、```generateBundle```内から'''emitFile()'''を呼ぶことで、
+追加ファイルをビルド成果物として登録できます。
+
+この方法では、自作プラグインはファイルの内容だけを生成し、
+実際にどのディレクトリへどのタイミングで書き込むのかはViteに任せられます。
+
+これにより、```sitemap.xml```と```robots.txt```の内容を作り、
+```emitFile()```でViteへ渡す処理だけを実装すれば良いです。
+
+## サイトマップXMLを生成
+
+サイトマップへ登録する１ページ分の型は、以下のようにしました。
+```ts
+export type SitemapEntry = {
+    path: string;
+    lastmod?: string;
+};
+```
+lastmodを任意にすることで、LPのような更新日を指定しないデータの作成も可能です。
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    <url>
+        <loc>
+            https://nawata.me/
+        </loc>
+    </url>
+    <url>
+        <loc>
+            https://nawata.me/blog 
+        </loc>
+    </url>
+    <url>
+        <loc>
+            https://nawata.me/blog/created-portfolio
+        </loc>
+        <lastmod>
+            2026-07-18
+        </lastmod>
+    </url>
+</urlset>
+```
+URL一覧をXMLへ変換すると、最終的には上記のような内容になります。
+
+## 最終的な```vite.config.ts```
+最終的な構成では、まずNode.js側でブログ記事のサイトマップ情報を取得します。
+```ts
+const blogSitemapEntries = getBlogSitemapEntries();
+```
+
+そして、その結果を自作したViteプラグインへ渡します。
+
+```ts
+sitemapPlugin({
+    hostname: "https://nawata.me",
+    entries: [
+        {
+            path: "/",
+        },
+        {
+            path: "/blog",
+        },
+        ...blogSitemapEntries, 
+    ], 
+});
+```
 
 <br/>
 # 最後に
 
-次回の記事では、どのようにこの裏ボスを攻略したのかについて触れたいと思います。
+はじめは、Reactアプリ側の記事一覧を```vite.config.ts```でそのまま使いまわそうとしていました。
 
-この記事は備忘録と冠していますが、一連のシリーズモノのように見えてきました。
-次回が最終回ですので、ご安心ください。
+しかし、React側の記事取得処理は、Viteの```glob()```に依存しており、
+Node.jsで動く```vite.config.ts```からでは使えませんでした。
+
+そこで、MDXのFrontmatterを採用し、React側の処理とNode.js側の処理を分離しました。
+
+さらに、既存のサイトマッププラグインが正常にファイルを書き出せない問題が発生したため、
+Viteの```emitFile()```を使用するローカルプラグインへ置き換えました。
+
+今回の作業を通じて、```vite.config.ts```はTypeScriptで書かれているが、
+Reactアプリと同じ環境で動いているわけではないことを知りました。
+
+同じプロジェクト内のコードであっても、どこで実行されるかを意識する必要性を学びました。
+
+また、ビルド時にファイルを生成する場合、
+出力先へ直接書き込むよりもビルドツールが準備している仕組みを使うほうが安全であると感じた。
 
 <br/>
 # 関連記事
 
+<BlogPostLink slug="automate-mdx-sitemap-2"/>
 <BlogPostLink slug="automate-mdx-sitemap-1"/>
