@@ -21,6 +21,15 @@ export const blogPosts: BlogPost[] = Object.values(modules)
         b.metadata.publishedAt.localeCompare(a.metadata.publishedAt)
     );
 
+export const allBlogPosts: BlogPost[] = Object.values(modules)
+    .map((module) => ({
+        metadata: module.metadata,
+        Component: module.default,
+    }))
+    .sort((a, b) =>
+        b.metadata.publishedAt.localeCompare(a.metadata.publishedAt)
+    );
+
 export function getBlogPostBySlug(slug: string): BlogPost | undefined{
     return blogPosts.find((post) => post.metadata.slug === slug);
 }
