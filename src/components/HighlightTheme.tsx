@@ -5,9 +5,7 @@ type HighlightThemeProps = {
   isLightMode: boolean;
 };
 
-export function HighlightTheme({
-  isLightMode,
-}: HighlightThemeProps) {
+export function HighlightTheme({ isLightMode }: HighlightThemeProps) {
   return (
     <style data-highlight-theme>
       {isLightMode ? lightTheme : darkTheme}
