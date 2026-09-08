@@ -6,10 +6,10 @@ type BlogModule = {
     default: ComponentType;
 };
 
-const modules = import.meta.glob<BlogModule>(
+const modules = import.meta.glob(
     "../articles/blog/*.mdx",
     { eager: true }
-);
+) as Record<string, BlogModule>;
 
 export const blogPosts: BlogPost[] = Object.values(modules)
     .map((module) => ({
