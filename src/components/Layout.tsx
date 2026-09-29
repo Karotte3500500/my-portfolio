@@ -17,10 +17,18 @@ const THEME_STORAGE_KEY = "theme";
 const THEME_CHANGE_EVENT = "theme-change";
 
 function subscribeToTheme(onStoreChange: () => void): () => void{
+	function handleStorage(event: StorageEvent): void{
+		if(event.storageArea === localStorage && event.key === THEME_STORAGE_KEY){
+			onStoreChange();
+		}
+	}
+
 	window.addEventListener(THEME_CHANGE_EVENT, onStoreChange);
+	window.addEventListener("storage", handleStorage);
 
 	return () => {
 		window.removeEventListener(THEME_CHANGE_EVENT, onStoreChange);
+		window.removeEventListener("storage", handleStorage);
 	};
 }
 
