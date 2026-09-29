@@ -1,5 +1,7 @@
+"use client";
+
 import { Outlet } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useSyncExternalStore } from "react";
 
 //コンポーネントのインポート
 import Header from "./Header";
@@ -11,23 +13,52 @@ import { useHashScroll } from "../hooks/useHashScroll";
 
 import { HighlightTheme } from "./HighlightTheme";
 
+const THEME_STORAGE_KEY = "theme";
+const THEME_CHANGE_EVENT = "theme-change";
+
+function subscribeToTheme(onStoreChange: () => void): () => void{
+	window.addEventListener(THEME_CHANGE_EVENT, onStoreChange);
+
+	return () => {
+		window.removeEventListener(THEME_CHANGE_EVENT, onStoreChange);
+	};
+}
+
+function getStoredIsLightMode(): boolean{
+	return localStorage.getItem(THEME_STORAGE_KEY) === "light";
+}
+
+function getServerIsLightMode(): boolean{
+	return false;
+}
+
+function storeTheme(isLightMode: boolean): void{
+	localStorage.setItem(
+		THEME_STORAGE_KEY,
+		isLightMode ? "light" : "dark"
+	);
+	window.dispatchEvent(new Event(THEME_CHANGE_EVENT));
+}
+
 export default function Layout(): React.JSX.Element{
 	useHashScroll();
 	useScrollReveal();
 
-	const [isLightMode, setIsLightMode] = useState<boolean>(
-    	() => localStorage.getItem("lightMode") === "true"
+	const isLightMode = useSyncExternalStore(
+		subscribeToTheme,
+		getStoredIsLightMode,
+		getServerIsLightMode
 	);
 
-	useEffect(() => {
-		localStorage.setItem("theme", isLightMode ? "light" : "dark");
-	}, [isLightMode]);
+	function handleThemeChange(nextIsLightMode: boolean): void{
+		storeTheme(nextIsLightMode);
+	}
 
 	return (
 		<div className={`app ${isLightMode ? "" : "dark"}`}>
 			<HighlightTheme isLightMode={isLightMode}/>
 
-			<Header isLightMode={isLightMode} setIsLightMode={setIsLightMode} />
+			<Header isLightMode={isLightMode} setIsLightMode={handleThemeChange} />
 			
 			<main>
 				<Outlet />
