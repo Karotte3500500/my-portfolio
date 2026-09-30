@@ -1,25 +1,37 @@
-import { useState, useEffect } from "react";
+"use client";
+
+import { useSyncExternalStore } from "react";
 import "./Hero.css";
 import profileImg from "../assets/myface_icon.png"
+
+const WIDE_VIEWPORT_BREAKPOINT = 1000;
+
+function subscribeToViewport(onStoreChange: () => void): () => void{
+    window.addEventListener("resize", onStoreChange);
+
+    return () => {
+        window.removeEventListener("resize", onStoreChange);
+    };
+}
+
+function getIsWideViewport(): boolean{
+    return window.innerWidth > WIDE_VIEWPORT_BREAKPOINT;
+}
+
+function getServerIsWideViewport(): boolean{
+    return false;
+}
 
 type HeroProps = {
     skipAnimation?: boolean;
 }
 
 export default function Hero({ skipAnimation = false }: HeroProps): React.JSX.Element{
-    const [displayWidth, setDisplayWidth] = useState(window.innerWidth);
-    
-    function handleResize() {
-        setDisplayWidth(window.innerWidth);
-    }
-
-    useEffect(() => {
-        window.addEventListener("resize", handleResize);
-
-        return () => {
-            window.removeEventListener("resize", handleResize);
-        }
-    })
+    const isWideViewport = useSyncExternalStore(
+        subscribeToViewport,
+        getIsWideViewport,
+        getServerIsWideViewport
+    );
 
     console.log(skipAnimation);
 
@@ -44,7 +56,7 @@ export default function Hero({ skipAnimation = false }: HeroProps): React.JSX.El
                 </h1>
 
                 <p className={`hero-lead ${skipAnimation ? "" : "blink-1"}`}>
-                    C#・Web・Unityを軸に、地域課題解決・創作などの{displayWidth > 1000 && <br/>}
+                    C#・Web・Unityを軸に、地域課題解決・創作などの{isWideViewport && <br/>}
                     ものづくりに挑戦しています。
                 </p>
 
@@ -53,7 +65,7 @@ export default function Hero({ skipAnimation = false }: HeroProps): React.JSX.El
                     <a className="button ghost" href="#contact">連絡する</a>
                 </div>
             </div>
-            <aside className={`hero-card reveal ${displayWidth > 1000 ? "main-hero-card" : ""}`} aria-label="プロフィール概要">
+            <aside className={`hero-card reveal ${isWideViewport ? "main-hero-card" : ""}`} aria-label="プロフィール概要">
                 <div className="profile-avatar">
                     <img src={profileImg} alt="プロフィール画像" />
                     </div>
