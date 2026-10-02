@@ -1,21 +1,46 @@
-import { useState } from "react";
+"use client";
+
+import { useEffect, useRef, useState } from "react";
 import "./Contact.css";
 
 const email = "nawata.satsuki@gmail.com"
 
 export default function Contact(): React.JSX.Element{
     const [copyMessage, setCopyMessage] = useState<string>("");
+    const timeoutIdRef = useRef<number | null>(null);
+    const requestIdRef = useRef(0);
+
+    useEffect(() => {
+        return () => {
+            requestIdRef.current += 1;
+            if (timeoutIdRef.current !== null) {
+                window.clearTimeout(timeoutIdRef.current);
+            }
+        };
+    }, []);
 
     async function copyEmailToClipboard(): Promise<void> {
+        const requestId = ++requestIdRef.current;
+
+        if (timeoutIdRef.current !== null) {
+            window.clearTimeout(timeoutIdRef.current);
+            timeoutIdRef.current = null;
+        }
+
         try {
             await navigator.clipboard.writeText(email);
+            if (requestId !== requestIdRef.current) return;
+
             setCopyMessage("メールアドレスをコピーしました: " + email);
 
-            setTimeout(() => {
+            timeoutIdRef.current = window.setTimeout(() => {
                 setCopyMessage("");
+                timeoutIdRef.current = null;
             }, 3000);
         }
         catch {
+            if (requestId !== requestIdRef.current) return;
+
             setCopyMessage("コピーに失敗しました。");
         }
     }
