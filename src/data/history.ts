@@ -112,6 +112,18 @@ export const historyItems: HistoryItem[] = [
     skills: [],
   },
   {
+    title: "コンピュータフェスティバル GM部門 第2位",
+    highlights: [
+      "他高専生との交流",
+    ],
+    points: [
+      "ターゲットを意識した開発",
+      "開発に取り組む高専生との交流",
+      "初めてのチーム開発"
+    ],
+    skills: ["C#", "Unity" ],
+  },
+  {
     title: "全国高専プロコン ピクシブ賞",
     highlights: [
       "憧れの高専プロコン",
@@ -146,6 +158,69 @@ export const historyItems: HistoryItem[] = [
       "フロントエンドの学習",
     ],
     skills: ["TypeScript", "React.js"],
+  },
+  {
+    title: "SmartHRインターン参加",
+    highlights: [
+      "初めてのインターン",
+    ],
+    points: [
+      "アジャイル開発を体感する",
+      "AI駆動開発",
+      "チーム開発",
+    ],
+    skills: ["TypeScript", "Next.js", "Ruby" ],
+  },
+  {
+    title: "DataXインターン参加",
+    highlights: [
+      "Biz側の視点を学ぶ",
+    ],
+    points: [
+      "事業の運営方法",
+      "組織構成",
+      "対象のニーズを考えること",
+      "ビジネスを体感する",
+    ],
+    skills: [],
+  },
+  {
+    title: "enechainハッカソンインターン最優秀賞",
+    highlights: [
+      "エネルギー×ソーシャルグッド",
+    ],
+    points: [
+      "ユースケースを捉える",
+      "異なる情報を共通の単位にする",
+      "アイディア出し",
+    ],
+    skills: ["TypeScript", "Next.js" ]
+  },
+  {
+    title: "ASKULインターン参加",
+    highlights: [
+      "実務体験",
+    ],
+    points: [
+      "初期のサービスの開発に参加",
+      "現場のレビュー",
+      "働き方のリアル",
+      "ランサムウェア攻撃後の現場",
+    ],
+    skills: [ ]
+  },
+  {
+    title: "BEENOSインターン参加",
+    highlights: [
+      "実務にもっと踏み込む",
+    ],
+    points: [
+      "長く動いているサービスの開発に参加",
+      "ヒアリングとチケット起票",
+      "テストケースの詰め方",
+      "自分の実装に責任が伴う",
+    ],
+    skills: [ ]
   },
   {
     title: "",

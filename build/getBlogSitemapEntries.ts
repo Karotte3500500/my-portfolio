@@ -43,7 +43,7 @@ function createBlogPath(
         );
     }
 
-    return `/${normalizedSlug}`;
+    return `/blog/${normalizedSlug}`;
 }
 
 function readBlogEntry(
